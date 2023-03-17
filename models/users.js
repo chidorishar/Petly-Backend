@@ -73,7 +73,7 @@ const phoneRegexp = /^\+380\d{3}\d{2}\d{2}\d{2}$/;
 const locationRegexp =
   /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
 
-const joiRegisterSchema = Joi.object({
+const userJoiRegisterSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
@@ -103,7 +103,7 @@ const joiRegisterSchema = Joi.object({
     .default('+380000000000'),
 });
 
-const joiEditSchema = Joi.object({
+const userJoiEditSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
@@ -117,9 +117,10 @@ const joiEditSchema = Joi.object({
   phone: Joi.string()
     .max(13)
     .pattern(phoneRegexp, 'Mobile phone must be in format +380xxxxxxxxx'),
+  avatarURL: Joi.string(),
 });
 
-const joiLoginSchema = Joi.object({
+const userJoiLoginSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
@@ -136,7 +137,7 @@ const joiLoginSchema = Joi.object({
 const User = model('user', userSchema);
 module.exports = {
   User,
-  joiRegisterSchema,
-  joiEditSchema,
-  joiLoginSchema,
+  userJoiRegisterSchema,
+  userJoiEditSchema,
+  userJoiLoginSchema,
 };

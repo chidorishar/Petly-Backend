@@ -34,7 +34,7 @@ const petSchema = new Schema(
 const nameRegexp = /^([a-zA-Zа-яА-ЯёЁёЁЇїІіҐґЄє\s]+)$/;
 const birthdayRegexp = /^(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?$/;
 
-const joiSchema = Joi.object({
+const petJoiSchema = Joi.object({
   name: Joi.string()
     .pattern(nameRegexp, 'Name must contain only letters')
     .min(2)
@@ -52,4 +52,5 @@ const joiSchema = Joi.object({
 });
 
 const Pet = model('pet', petSchema);
-module.exports = { Pet, joiSchema };
+
+module.exports = { Pet, petJoiSchema };
