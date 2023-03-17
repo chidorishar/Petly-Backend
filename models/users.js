@@ -29,7 +29,7 @@ const userSchema = Schema(
     },
     birthday: {
       type: Date,
-      default: '00.00.0000',
+      default: new Date(),
     },
     token: {
       type: String,
