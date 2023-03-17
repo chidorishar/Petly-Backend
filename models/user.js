@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
+const bcrypt = require('bcrypt');
+const gravatar = require('gravatar');
 
 const userSchema = Schema(
   {
@@ -11,7 +13,7 @@ const userSchema = Schema(
     password: {
       type: String,
       required: [true, 'Set password for user'],
-      minlenght: 7,
+      minLength: 7,
     },
     name: {
       type: String,
@@ -44,16 +46,21 @@ const userSchema = Schema(
 
   {
     methods: {
+      setAvatar(path = null) {
+        const pathToImg = path ?? gravatar.url(this.email, { s: '250' });
+        this.avatarURL = pathToImg;
+      },
+      // Хеш пароля при регістрації
+      setPassword: function (password) {
+        this.password = bcrypt.hashSync(password, 10);
+      },
 
-// Хеш пароля при регістрації
-setPassword = function (password) {
-  this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-};
-// Хеш пароля при логіні
-comparePassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};},
-    versionKey: false
+      // Хеш пароля при логіні
+      comparePassword: function (password) {
+        return bcrypt.compareSync(password, this.password);
+      },
+    },
+    versionKey: false,
   }
 );
 
