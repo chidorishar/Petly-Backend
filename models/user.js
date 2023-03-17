@@ -36,13 +36,25 @@ const userSchema = Schema(
     favorite: [
       {
         type: Schema.ObjectId,
-        ref: 'notice',
+        ref: 'notices',
       },
     ],
     avatarURL: { type: String, default: null },
   },
 
-  { versionKey: false }
+  {
+    methods: {
+
+// Хеш пароля при регістрації
+setPassword = function (password) {
+  this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
+// Хеш пароля при логіні
+comparePassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};},
+    versionKey: false
+  }
 );
 
 const emailRegexp =
