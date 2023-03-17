@@ -2,7 +2,7 @@ const { User } = require('../../models');
 const { Conflict } = require('http-errors');
 const gravatar = require('gravatar');
 const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
+
 
 const register = async (req, res) => {
   const { name, email, password, location, phone } = req.body;
