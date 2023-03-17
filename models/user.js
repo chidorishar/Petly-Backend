@@ -28,7 +28,7 @@ const userSchema = Schema(
       default: '+380000000000',
     },
     birthday: {
-      type: String,
+      type: Date,
       default: '00.00.0000',
     },
     token: {
