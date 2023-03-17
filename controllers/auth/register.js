@@ -11,7 +11,7 @@ const register = async (req, res) => {
     throw new Conflict(`User with email ${email} already exists`);
   }
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-  const verificationToken = uuidv4();
+ 
   const avatarURL = gravatar.url(email);
   const newUser = new User({
     name,
@@ -20,7 +20,7 @@ const register = async (req, res) => {
     location,
     phone,
     avatarURL,
-    verificationToken,
+   
   });
   newUser.setPassword(password);
   await newUser.save();
