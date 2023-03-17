@@ -40,10 +40,6 @@ const userSchema = Schema(
       },
     ],
     avatarURL: { type: String, default: null },
-    resetToken: {
-      type: String,
-      default: null,
-    },
   },
 
   { versionKey: false }
