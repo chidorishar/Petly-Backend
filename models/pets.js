@@ -10,7 +10,7 @@ const petSchema = new Schema(
       required: [true, 'Name is required'],
     },
     birthday: {
-      type: String,
+      type: Date,
       required: [true, 'Birthday is required'],
     },
     breed: {
@@ -25,10 +25,7 @@ const petSchema = new Schema(
       type: String,
       required: [true, 'Comment is required'],
     },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: 'user',
-    },
+    owner: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   { versionKey: false }
 );

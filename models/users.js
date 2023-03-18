@@ -37,19 +37,9 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
-    favorite: 
-      {
-        type: Schema.ObjectId,
-        ref: 'notices',
-      },
-    pets: {
-      type: Schema.ObjectId,
-      ref: 'Pet',
-    },
-    notices: {
-      type: Schema.ObjectId,
-      ref: 'Notice',
-    },
+    favoriteNotices: [{ type: Schema.Types.ObjectId, ref: 'Notice' }],
+    pets: [{ type: Schema.Types.ObjectId, ref: 'Pet' }],
+    notices: [{ type: Schema.Types.ObjectId, ref: 'Notice' }],
     avatarURL: { type: String, default: null },
   },
 
