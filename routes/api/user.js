@@ -5,6 +5,6 @@ const { user: ctrl } = require('../../controllers');
 
 const router = express.Router();
 
-router.patch('/update', auth, ctrlWrapper(ctrl.updateUser));
+router.patch('/update/:userID', auth, ctrlWrapper(ctrl.updateUser));
 
 module.exports = router;
