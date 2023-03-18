@@ -1,15 +1,15 @@
-const { User } = require('../../models');
 const { InternalServerError, Conflict } = require('http-errors');
+const { userServices } = require('../../services');
 
 const register = async (req, res) => {
   const { name, email, password, location, phone } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await userServices.findUser({ email });
   if (user) {
     throw new Conflict(`User with email ${email} already exists`);
   }
 
-  const newUser = new User({
+  const newUser = await userServices.createUser({
     name,
     email,
     location,
