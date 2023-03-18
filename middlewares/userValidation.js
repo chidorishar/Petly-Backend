@@ -1,3 +1,4 @@
+const { Unauthorized } = require('http-errors');
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
@@ -6,20 +7,15 @@ module.exports = (req, res, next) => {
   }
   try {
     const secretKey = process.env.SECRET_KEY;
-    const tokenFromHeaders = req.headers.authorization;
-    if (!tokenFromHeaders) {
-      return res.status(401).json({ message: 'Not authorized' });
+    const [type, token] = req.headers.authorization.split(' ');
+    if (!token || type !== 'Bearer') {
+      throw new Unauthorized('Not authorized in IF');
     }
-    if (!tokenFromHeaders.startsWith('Bearer')) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
-    const authToken = tokenFromHeaders.split(' ')[1];
-    const decoded = jwt.verify(authToken, secretKey);
 
+    const decoded = jwt.verify(token, secretKey);
     req.user = decoded.id;
-
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Not authorized' });
+    return next(error);
   }
 };
