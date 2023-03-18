@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const { Schema, model } = require('mongoose');
 
 const newsSchema = Schema(
@@ -28,8 +29,24 @@ const newsSchema = Schema(
   { versionKey: false }
 );
 
+const getNewsQueryParam = Joi.object({
+  limit: Joi.number()
+    .min(1)
+    .messages({
+      'number.min': `"limit" must be equal or greater than {#limit}. You provided: {limit}`,
+    })
+    .optional(),
+  page: Joi.number()
+    .min(1)
+    .messages({
+      'number.min': `"page" must be equal or greater than {#limit}. You provided: {page}`,
+    })
+    .optional(),
+});
+
 const News = model('news', newsSchema);
 
 module.exports = {
   News,
+  getNewsQueryParam,
 };
