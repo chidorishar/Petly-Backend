@@ -1,29 +1,24 @@
 const { User } = require('../../models');
-const { Conflict } = require('http-errors');
-const gravatar = require('gravatar');
-const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
+const { InternalServerError, Conflict } = require('http-errors');
 
 const register = async (req, res) => {
   const { name, email, password, location, phone } = req.body;
+
   const user = await User.findOne({ email });
   if (user) {
     throw new Conflict(`User with email ${email} already exists`);
   }
-  const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
- 
-  const avatarURL = gravatar.url(email);
+
   const newUser = new User({
     name,
     email,
-    password: hashPassword,
     location,
     phone,
-    avatarURL,
-   
   });
   newUser.setPassword(password);
-  await newUser.save();
+  newUser.setAvatar();
+  const savedUser = await newUser.save();
+  if (!savedUser) throw new InternalServerError('Failed to save new user');
 
   res.status(201).json({
     status: 'success',
@@ -34,8 +29,7 @@ const register = async (req, res) => {
         location,
         phone,
         email,
-        avatarURL,
-        verificationToken,
+        avatarUrl: savedUser.avatarUrl,
       },
     },
   });
