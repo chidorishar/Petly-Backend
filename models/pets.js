@@ -10,7 +10,7 @@ const petSchema = new Schema(
       required: [true, 'Name is required'],
     },
     birthday: {
-      type: String,
+      type: Date,
       required: [true, 'Birthday is required'],
     },
     breed: {
