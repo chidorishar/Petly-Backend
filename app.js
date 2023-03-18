@@ -5,6 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
+const { usersRouter } = require('./routes/api/users');
 
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
 app.use((err, req, res, next) => {
   const { status = 500, message = 'Server error' } = err;
