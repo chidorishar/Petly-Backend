@@ -1,4 +1,3 @@
-// const { User } = require('../../models');
 const { InternalServerError, Conflict } = require('http-errors');
 const { userServices } = require('../../services');
 
