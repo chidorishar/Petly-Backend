@@ -10,7 +10,7 @@ const getAllNews = async (req, res) => {
 
   res.json({
     message: 'success',
-    news,
+    result: news,
   });
 };
 
