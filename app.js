@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
 const { usersRouter } = require('./routes/api/users');
+const newsRouter = require('./routes/api/news');
 
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api/news', newsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 

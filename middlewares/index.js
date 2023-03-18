@@ -1,5 +1,10 @@
-const { validation } = require('./validation.js');
 const { ctrlWrapper } = require('./ctrlWrapper.js');
 const userValidation = require('./userValidation.js');
+const { validateBody, validateQueryParams } = require('./joiValidation');
 
-module.exports = { validation, ctrlWrapper, userValidation };
+module.exports = {
+  ctrlWrapper,
+  validateBody,
+  validateQueryParams,
+  userValidation,
+};
