@@ -3,6 +3,8 @@ const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const gravatar = require('gravatar');
 
+const { mongooseErrorHandler } = require('../helpers');
+
 const userSchema = Schema(
   {
     email: {
@@ -134,6 +136,7 @@ const userJoiLoginSchema = Joi.object({
     .required('Password is required'),
 });
 
+userSchema.post('save', mongooseErrorHandler);
 const User = model('user', userSchema);
 module.exports = {
   User,

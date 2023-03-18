@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 
+const { mongooseErrorHandler } = require('../helpers');
+
 const petSchema = new Schema(
   {
     name: {
@@ -51,6 +53,7 @@ const petJoiSchema = Joi.object({
   comment: Joi.string().min(8).max(120).required('Comment is required'),
 });
 
+petSchema.post('save', mongooseErrorHandler);
 const Pet = model('pet', petSchema);
 
 module.exports = { Pet, petJoiSchema };
