@@ -1,11 +1,16 @@
 const express = require('express');
 
 const ctrl = require('../../controllers/news');
+const { getNewsQueryParam } = require('../../models');
 
 const router = express.Router();
 
-const { ctrlWrapper } = require('../../middlewares');
+const { ctrlWrapper, validateQueryParams } = require('../../middlewares');
 
-router.get('/', ctrlWrapper(ctrl.getAllNews));
+router.get(
+  '/',
+  validateQueryParams(getNewsQueryParam),
+  ctrlWrapper(ctrl.getAllNews)
+);
 
 module.exports = router;
