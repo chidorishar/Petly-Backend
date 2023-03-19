@@ -13,13 +13,13 @@ module.exports = async (req, res, next) => {
       throw new Unauthorized('Not authorized in IF');
     }
 
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded.id;
-
-    const user = await User.findById(decoded.id);
+    const {id} = jwt.verify(token, secretKey);
+    
+    const user = await User.findById(id);
     if (!user || !user.token) {
       throw new Unauthorized('Not authorized');
     }
+    req.user = id;
     next();
   } catch (error) {
     return next(error);
