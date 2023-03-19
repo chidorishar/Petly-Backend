@@ -5,6 +5,8 @@ const path = require('path');
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
+const newsRouter = require("./routes/api/news");
+const noticeRouter = require("./routes/api/notices");
 const { usersRouter } = require('./routes/api/users');
 const newsRouter = require('./routes/api/news');
 
@@ -18,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/news', newsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/notices', noticeRouter);
 app.use('/api/users', usersRouter);
 
 app.use((err, req, res, next) => {
