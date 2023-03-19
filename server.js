@@ -2,7 +2,7 @@ const app = require('./app');
 const { connectToMongo } = require('./services');
 const { PORT } = process.env;
 
-//MAIN
+// MAIN
 (async function () {
   const isConnectedToDB = !(await connectToMongo());
   if (!isConnectedToDB) process.exit(1);
