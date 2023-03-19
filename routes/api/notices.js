@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {  ctrlWrapper } = require('../../middlewares');
+const {  ctrlWrapper, validateQueryParams } = require('../../middlewares');
 const ctrl = require('../../controllers/notices');
+const { getNoticesQueryParam} = require("../../models")
 
-router.get('/:category', ctrlWrapper(ctrl.getNoticesByCategory));
+router.get('/:category', validateQueryParams(getNoticesQueryParam), ctrlWrapper(ctrl.getNoticesByCategory));
 // створити ендпоінт для отримання оголошень по категоріям 
 // router.get('/favorite', authMdw, ctrlWrapper(getFavoriteNoticesCtrl));
 // створити ендпоінт для отримання оголошень авторизованого користувача доданих ним же в обрані

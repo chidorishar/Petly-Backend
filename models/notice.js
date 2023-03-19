@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const Joi = require('joi');
 
 const noticeSchema = new Schema({
   title: {
@@ -59,7 +60,22 @@ const noticeSchema = new Schema({
 
 const Notice = model("notice", noticeSchema);
 
+const getNoticesQueryParam = Joi.object({
+  limit: Joi.number()
+    .min(1)
+    .messages({
+      'number.min': `"limit" must be equal or greater than {#limit}. You provided: {limit}`,
+    })
+    .optional(),
+  page: Joi.number()
+    .min(1)
+    .messages({
+      'number.min': `"page" must be equal or greater than {#limit}. You provided: {page}`,
+    })
+    .optional(),
+});
+
 
 module.exports = {
-  Notice
+  Notice, getNoticesQueryParam
 };
