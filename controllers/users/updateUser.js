@@ -3,7 +3,6 @@ const ObjectId = require('mongodb').ObjectId;
 const { NotFound } = require('http-errors');
 
 const updateUser = async (req, res) => {
-  console.log('body', req.body);
   const owner = req.user;
   const _id = ObjectId(req.params.id);
 
