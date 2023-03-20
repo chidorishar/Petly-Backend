@@ -3,7 +3,7 @@ const fs = require('fs/promises');
 const { BadRequest, InternalServerError } = require('http-errors');
 require('dotenv').config();
 
-const { Pet } = require('../../models');
+const { petServices, userServices } = require('../../services');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -13,6 +13,7 @@ cloudinary.config({
 
 const addPet = async (req, res) => {
   const _id = req.user;
+
   if (!req.file) {
     throw BadRequest('Avatar is required');
   }
@@ -30,15 +31,11 @@ const addPet = async (req, res) => {
     throw InternalServerError('Failed to upload your image');
   }
 
-  const newPet = await Pet.create({
+  const newPet = await petServices.createPet({
     ...req.body,
     photo: url,
     owner: _id,
   });
-  // check is document creation in DB successful
-  if (!newPet) {
-    throw InternalServerError('Failed to save your pet');
-  }
 
   res.status(201).json({
     message: 'success',
