@@ -9,6 +9,8 @@ const authRouter = require('./routes/api/auth');
 const newsRouter = require('./routes/api/news');
 const noticeRouter = require('./routes/api/notices');
 const { usersRouter } = require('./routes/api/users');
+const servicesRouter = require('./routes/api/services');
+
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
@@ -21,6 +23,7 @@ app.use('/api/news', newsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/notices', noticeRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/services', servicesRouter);
 
 app.use((err, req, res, next) => {
   const { status = 500, message = 'Server error' } = err;
