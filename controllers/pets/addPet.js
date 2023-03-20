@@ -20,6 +20,7 @@ const addPet = async (req, res) => {
   const { url } = await cloudinary.uploader.upload(tempUpload, {
     width: 182,
     height: 182,
+    crop: 'fill',
   });
 
   // delete temp file
