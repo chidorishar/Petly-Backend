@@ -1,7 +1,5 @@
 const multer = require('multer');
 const path = require('path');
-// const { UnsupportedMediaType } = require('http-errors');
-// require('dotenv').config();
 
 const tempDir = path.join(__dirname, '../', 'images_tmp');
 
