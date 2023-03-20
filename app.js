@@ -8,7 +8,6 @@ const authRouter = require('./routes/api/auth');
 const newsRouter = require("./routes/api/news");
 const noticeRouter = require("./routes/api/notices");
 const { usersRouter } = require('./routes/api/users');
-const newsRouter = require('./routes/api/news');
 
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
