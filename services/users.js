@@ -11,7 +11,7 @@ const findUser = ({ ...arg }) => {
 };
 
 const updateUserById = (id, data) => {
-  return User.findByIdAndUpdate(id, data);
+  return User.findByIdAndUpdate(id, { $set: data }, { new: true });
 };
 
 const addPetForUserWithId = async (userId, petId) => {
