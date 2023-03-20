@@ -6,8 +6,9 @@ const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
-const { usersRouter } = require('./routes/api/users');
 const newsRouter = require('./routes/api/news');
+const noticeRouter = require('./routes/api/notices');
+const { usersRouter } = require('./routes/api/users');
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/news', newsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/notices', noticeRouter);
 app.use('/api/users', usersRouter);
 
 app.use((err, req, res, next) => {

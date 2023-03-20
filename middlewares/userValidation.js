@@ -1,7 +1,8 @@
 const { Unauthorized } = require('http-errors');
 const jwt = require('jsonwebtoken');
+const { User } = require('../models');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   if (req.method === 'options') {
     next();
   }
@@ -12,8 +13,13 @@ module.exports = (req, res, next) => {
       throw new Unauthorized('Not authorized in IF');
     }
 
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded.id;
+    const {id} = jwt.verify(token, secretKey);
+    
+    const user = await User.findById(id);
+    if (!user || !user.token) {
+      throw new Unauthorized('Not authorized');
+    }
+    req.user = id;
     next();
   } catch (error) {
     return next(error);

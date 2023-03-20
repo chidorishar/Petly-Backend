@@ -5,10 +5,11 @@ const {
   userValidation,
   validateBody,
 } = require('../../middlewares');
-const { getUserInformation } = require('../../controllers/users');
 const { petJoiSchema } = require('../../models');
 const { addPet } = require('../../controllers/pets');
 const { upload } = require('../../services');
+const { getUserInformation, updateUser } = require('../../controllers/users');
+const { userJoiEditSchema } = require('../../models');
 
 router.get('/', userValidation, ctrlWrapper(getUserInformation));
 router.post(
@@ -17,6 +18,13 @@ router.post(
   upload.single('photo'),
   validateBody(petJoiSchema),
   ctrlWrapper(addPet)
+);
+
+router.patch(
+  '/',
+  userValidation,
+  validateBody(userJoiEditSchema),
+  ctrlWrapper(updateUser)
 );
 
 module.exports = { usersRouter: router };
