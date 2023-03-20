@@ -6,7 +6,7 @@ const {
   validateBody,
 } = require('../../middlewares');
 const { petJoiSchema } = require('../../models');
-const { addPet } = require('../../controllers/pets');
+const { addPet, deletePetById } = require('../../controllers/pets');
 const { upload } = require('../../services');
 const { getUserInformation, updateUser } = require('../../controllers/users');
 const { userJoiEditSchema } = require('../../models');
@@ -26,5 +26,7 @@ router.patch(
   validateBody(userJoiEditSchema),
   ctrlWrapper(updateUser)
 );
+
+router.delete('/:id', userValidation, ctrlWrapper(deletePetById));
 
 module.exports = { usersRouter: router };
