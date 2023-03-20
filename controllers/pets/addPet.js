@@ -36,6 +36,7 @@ const addPet = async (req, res) => {
     photo: url,
     owner: _id,
   });
+  await userServices.addPetForUserWithId(_id, newPet._id);
 
   res.status(201).json({
     message: 'success',
