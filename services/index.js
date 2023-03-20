@@ -1,5 +1,6 @@
 const connectToMongo = require('./connectToMongoDB');
-const userServices = require('./users');
 const { findServices } = require('./services');
+const userServices = require('./users');
+const upload = require('./upload');
 
-module.exports = { connectToMongo, userServices, findServices };
+module.exports = { connectToMongo, userServices, upload, findServices };
