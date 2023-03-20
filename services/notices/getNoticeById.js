@@ -1,7 +1,7 @@
 const { Notice } = require('../../models');
 const { BadRequest } = require('http-errors');
 
-const getNoticebyId = async id => {
+const getNoticeById = async id => {
   const notice = await Notice.findOne({ _id: id });
 
   if (!notice) {
@@ -10,4 +10,4 @@ const getNoticebyId = async id => {
   return notice;
 };
 
-module.exports = getNoticebyId;
+module.exports = getNoticeById;

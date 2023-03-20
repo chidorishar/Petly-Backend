@@ -7,7 +7,7 @@ const noticeSchema = new Schema({
     required: [true, "Set title for notice"],
     minLength: 2,
     maxLength: 48,
-    match: /^[a-zA-Z]+$/
+    match: /^[a-zA-Z\s]+$/
   },
   breed: {
     type: String,    
@@ -60,7 +60,7 @@ const noticeSchema = new Schema({
 
 const Notice = model("notice", noticeSchema);
 
-const getNoticesQueryParam = Joi.object({
+const noticesQueryParam = Joi.object({
   limit: Joi.number()
     .min(1)
     .messages({
@@ -77,5 +77,5 @@ const getNoticesQueryParam = Joi.object({
 
 
 module.exports = {
-  Notice, getNoticesQueryParam
+  Notice, noticesQueryParam
 };

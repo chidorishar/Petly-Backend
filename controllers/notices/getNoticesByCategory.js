@@ -6,7 +6,7 @@ const getNoticesByCategory = async (req, res) => {
   limit = parseInt(limit) > 20 ? 20 : parseInt(limit);
   const skip = (parseInt(page) - 1) * limit;
 
-    const category = req.params.category;
+  const category = req.params.category;
   
   // todo возможно сделать проверку в мидлваре
   if (
