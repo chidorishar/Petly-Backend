@@ -1,12 +1,11 @@
-const { User } = require('../../models/users');
 const { NotFound } = require('http-errors');
+const { userServices } = require('../../services');
 
 const updateUser = async (req, res) => {
   const owner = req.user;
-  const user = await User.findOneAndUpdate(
+  const user = await userServices.updateUserById(
     { _id: owner },
     { $set: req.body },
-    { new: true }
     );
 
   if (!user) {
