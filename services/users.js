@@ -15,7 +15,7 @@ const updateUserById = (id, data) => {
 };
 
 const addPetForUserWithId = async (userId, petId) => {
-  const userWithId = await User.find(userId);
+  const userWithId = await User.findOne({ _id: userId });
   if (!userWithId) throw InternalServerError('Error during connection to DB');
 
   userWithId.pets.push(petId);
