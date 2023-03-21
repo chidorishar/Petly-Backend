@@ -29,6 +29,6 @@ router.patch(
   ctrlWrapper(updateUser)
 );
 
-router.delete('/:id', userValidation, ctrlWrapper(deletePetById));
+router.delete('/pets/:id', userValidation, ctrlWrapper(deletePetById));
 
 module.exports = { usersRouter: router };
