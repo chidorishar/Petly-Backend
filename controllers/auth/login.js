@@ -3,7 +3,7 @@ const { userServices } = require('../../services');
 
 const jwt = require('jsonwebtoken');
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, NODE_ENV } = process.env;
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -16,7 +16,8 @@ const login = async (req, res) => {
   const payload = {
     id: user._id,
   };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+  const tokenLifetime = NODE_ENV === "development" ? "1w" : "1h";
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: tokenLifetime });
   const usr = await userServices.updateUserById(user._id, { token });
   if (!usr) throw new InternalServerError('Failed to save new user');
 

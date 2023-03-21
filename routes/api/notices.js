@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {  ctrlWrapper, validateQueryParams, userValidation } = require('../../middlewares');
+const {  ctrlWrapper, validateQueryParams, userValidation, validateBody} = require('../../middlewares');
 const ctrl = require('../../controllers/notices');
-const { noticesQueryParam} = require("../../models");
+const { noticesQueryParam, newNoticeSchema} = require("../../models");
 
 
 router.get('/category/:category', validateQueryParams(noticesQueryParam), ctrlWrapper(ctrl.getNoticesByCategory));
@@ -17,7 +17,7 @@ router.get('/notice/:id', ctrlWrapper(ctrl.getNoticeById));
 
 // router.get('/search', ctrlWrapper(getNoticeByTitleCtrl));
 // створити ендпоінт для пошуку оголошеннь по заголовку
-router.post('/new', userValidation, ctrlWrapper(ctrl.addNotice));
+router.post('/new', userValidation, validateBody(newNoticeSchema), ctrlWrapper(ctrl.addNotice));
 // створити ендпоінт для додавання оголошень відповідно до обраної категорії
 // router.delete('/own/:id', authMdw, ctrlWrapper(deleteOwnNoticeCtrl));
 // створити ендпоінт для видалення оголошення авторизованого користувача створеного цим же користувачем 
