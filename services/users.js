@@ -7,11 +7,13 @@ const createUser = ({ ...arg }) => {
 };
 
 const findUser = ({ ...arg }) => {
-  return User.findOne(arg);
+  return User.findOne(arg).select('-token -password -favoriteNotices -notices');
 };
 
 const updateUserById = (id, data) => {
-  return User.findByIdAndUpdate(id, { $set: data }, { new: true });
+  return User.findByIdAndUpdate(id, { $set: data }, { new: true }).select(
+    '-token -password -favoriteNotices -pets -notices'
+  );
 };
 
 const addPetForUserWithId = async (userId, petId) => {
