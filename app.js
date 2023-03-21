@@ -2,6 +2,8 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs/promises');
+
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
@@ -25,6 +27,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/services', servicesRouter);
 
 app.use((err, req, res, next) => {
+  if (req.file) fs.unlink(req.file.path);
   const { status = 500, message = 'Server error' } = err;
   res.status(status).json({ message });
 });
