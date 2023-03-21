@@ -7,7 +7,7 @@ const {
 const { Pet, petJoiSchema } = require('./pets');
 
 const { News, getNewsQueryParam } = require('./news');
-const { Notice, getNoticesQueryParam } = require('./notice');
+const { Notice, noticesQueryParam, newNoticeSchema } = require('./notice');
 const { Services } = require('./services');
 
 module.exports = {
@@ -20,6 +20,7 @@ module.exports = {
   News,
   getNewsQueryParam,
   Notice,
-  getNoticesQueryParam,
+  noticesQueryParam,
+  newNoticeSchema,
   Services,
 };
