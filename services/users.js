@@ -7,11 +7,13 @@ const createUser = ({ ...arg }) => {
 };
 
 const findUser = ({ ...arg }) => {
-  return User.findOne(arg);
+  return User.findOne(arg).select('-token -password -favoriteNotices -notices');
 };
 
 const updateUserById = (id, data) => {
-  return User.findByIdAndUpdate(id, { $set: data }, { new: true });
+  return User.findByIdAndUpdate(id, { $set: data }, { new: true }).select(
+    '-token -password -favoriteNotices -pets -notices'
+  );
 };
 
 const addPetForUserWithId = async (userId, petId) => {
@@ -26,4 +28,26 @@ const addPetForUserWithId = async (userId, petId) => {
   return savedUser;
 };
 
-module.exports = { createUser, findUser, updateUserById, addPetForUserWithId };
+const deletePetForUserWithId = async (userId, petId) => {
+  const userWithId = await User.findOne({ _id: userId });
+  if (!userWithId) throw InternalServerError('Error during connection to DB');
+
+  const deletionRes = await userWithId.updateOne(
+    { _id: userId },
+    {
+      $pull: { pets: { $in: [petId] } },
+    }
+  );
+  if (!deletionRes)
+    throw InternalServerError('Error during deleting pet from DB');
+
+  return deletionRes;
+};
+
+module.exports = {
+  createUser,
+  findUser,
+  updateUserById,
+  addPetForUserWithId,
+  deletePetForUserWithId,
+};
