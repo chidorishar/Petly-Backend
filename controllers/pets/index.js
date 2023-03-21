@@ -1,3 +1,4 @@
 const addPet = require('./addPet');
+const deletePetById = require('./deletePetById');
 
-module.exports = { addPet };
+module.exports = { addPet, deletePetById };

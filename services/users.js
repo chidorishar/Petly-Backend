@@ -28,4 +28,26 @@ const addPetForUserWithId = async (userId, petId) => {
   return savedUser;
 };
 
-module.exports = { createUser, findUser, updateUserById, addPetForUserWithId };
+const deletePetForUserWithId = async (userId, petId) => {
+  const userWithId = await User.findOne({ _id: userId });
+  if (!userWithId) throw InternalServerError('Error during connection to DB');
+
+  const deletionRes = await userWithId.updateOne(
+    { _id: userId },
+    {
+      $pull: { pets: { $in: [petId] } },
+    }
+  );
+  if (!deletionRes)
+    throw InternalServerError('Error during deleting pet from DB');
+
+  return deletionRes;
+};
+
+module.exports = {
+  createUser,
+  findUser,
+  updateUserById,
+  addPetForUserWithId,
+  deletePetForUserWithId,
+};
