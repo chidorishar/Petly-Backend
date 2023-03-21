@@ -1,16 +1,12 @@
-const { User } = require('../../models/users');
 const { NotFound } = require('http-errors');
+const { userServices } = require('../../services');
 
 const updateUser = async (req, res) => {
-  const owner = req.user;
-  const user = await User.findOneAndUpdate(
-    { _id: owner },
-    { $set: req.body },
-    { new: true }
-    );
+  const ownerID = req.user;
+  const user = await userServices.updateUserById(ownerID, req.body);
 
   if (!user) {
-    throw new NotFound(`Contact with id=${owner} not found`);
+    throw new NotFound(`Contact with id=${ownerID} not found`);
   }
 
   res.json(user);
