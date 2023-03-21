@@ -4,6 +4,7 @@ const {
   ctrlWrapper,
   userValidation,
   validateBody,
+  uploadImageToCloudinary,
 } = require('../../middlewares');
 const { petJoiSchema } = require('../../models');
 const { addPet, deletePetById } = require('../../controllers/pets');
@@ -17,6 +18,7 @@ router.post(
   userValidation,
   upload.single('photo'),
   validateBody(petJoiSchema),
+  uploadImageToCloudinary,
   ctrlWrapper(addPet)
 );
 

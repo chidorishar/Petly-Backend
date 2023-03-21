@@ -1,66 +1,99 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 const Joi = require('joi');
+const { mongooseErrorHandler } = require('../helpers');
+
+const nameRegexp = /^([a-zA-Zа-яА-ЯёЁёЁЇїІіҐґЄє\s]+)$/;
+const locationRegexp =
+  /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
+const birthdayRegexp = /^(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?$/;
+const validCategory = ['sell', 'for-free', 'lost-found']
+const validGender = ['male','female'];
 
 const noticeSchema = new Schema({
   title: {
     type: String,
-    required: [true, "Set title for notice"],
-    minLength: 2,
-    maxLength: 48,
-    match: /^[a-zA-Z]+$/
+    required: [true, 'Set title for notice'],
   },
   breed: {
-    type: String,    
-    minLength: 2,
-    maxLength: 24,
-    match: /^[a-zA-Z]+$/
+    type: String,
+    required: [true, 'Set breed for notice'],
   },
   location: {
     type: String,
-    required: true
+    required: true,
   },
   birthDate: {
-    type: String,
-    required: true
+    type: Date,
+    default: new Date(),
   },
-  category:{
-    type: String,  
-    enum: ["sell", "for-free", "lost-found"], 
-    required: true
+  category: {
+    type: String,
+    enum: ['sell', 'for-free', 'lost-found'],
+    required: true,
   },
   name: {
     type: String,   
-    minLength: 2,
-    maxLength: 16,
-    match: /^[a-zA-Z]+$/
+    default: "new name",
   },
-  sex:{
-    type: String,   
-    enum: ["male", "female"],
-    required: true
+  sex: {
+    type: String,
+    enum: ['male', 'female'],
+    required: true,
   },
-  price:{
-    type: Number,   
+  price: {
+    type: Number,
+    default: 5,
   },
-  image:{
-    type: String,   
-    required: true
+  image: {
+    type: String,
+    required: true,
   },
   comments: {
     type: String,   
-    minLength: 8,
-    maxLength: 120,
     required: [true, 'Comment is required'],
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    description: 'Notice creation date',
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'user',    
+    ref: 'user',
   },
 });
 
-const Notice = model("notice", noticeSchema);
+const newNoticeSchema = Joi.object({
+  title: Joi.string()
+    .min(2)
+    .max(48)
+    .pattern(nameRegexp, 'Title must contain only letters')
+    .required('Title required'),
+  breed: Joi.string()
+    .min(2)
+    .max(24)
+    .pattern(nameRegexp, 'breed must contain only letters')
+    .required('Breed required'),
+  location: Joi.string()
+    .pattern(locationRegexp, 'Location must be in format City, Region')
+    .empty('')
+    .default('City, Region'),
+  birthDate: Joi.string()
+    .pattern(birthdayRegexp, 'Birthday must be in format 19.12.2020')
+    .required('Birthday is required'),
+  name: Joi.string()
+    .pattern(nameRegexp, 'Name must contain only letters')
+    .min(2)
+    .max(16)
+    .required('Name is required'),
+  category: Joi.string().valid(...validCategory).required('Category is required'),
+  sex: Joi.string().valid(...validGender),
+  price: Joi.number().min(1),
+  comments: Joi.string().min(8).max(120),
+  image: Joi.string(),
+});
 
-const getNoticesQueryParam = Joi.object({
+const noticesQueryParam = Joi.object({
   limit: Joi.number()
     .min(1)
     .messages({
@@ -75,7 +108,10 @@ const getNoticesQueryParam = Joi.object({
     .optional(),
 });
 
-
+noticeSchema.post('save', mongooseErrorHandler);
+const Notice = model('notice', noticeSchema);
 module.exports = {
-  Notice, getNoticesQueryParam
+  Notice,
+  noticesQueryParam,
+  newNoticeSchema,
 };
