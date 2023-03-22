@@ -6,8 +6,12 @@ const createUser = ({ ...arg }) => {
   return new User(arg);
 };
 
-const findUser = ({ ...arg }) => {
-  return User.findOne(arg).select('-token -password -favoriteNotices -notices');
+const findUser = (searchQueryObj, returnFullData = false) => {
+  const foundUser = User.findOne(searchQueryObj);
+
+  return returnFullData
+    ? foundUser
+    : foundUser?.select('-token -password -favoriteNotices -notices');
 };
 
 const updateUserById = (id, data) => {
