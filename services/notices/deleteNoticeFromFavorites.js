@@ -1,9 +1,12 @@
 const { User } = require('../../models');
 
+const deleteNoticeFromFavorites = async (noticeID, userId) => {
+  const { favoriteNotices: oldFavNoticesArray } = await User.findOneAndUpdate(
+    { _id: userId },
+    { $pull: { favoriteNotices: noticeID } }
+  );
 
-const deleteNoticeFromFavorites = async (id, userId) => {
-  const {favoriteNotices} = await User.findOneAndUpdate({ _id: userId },  { $pull: { favoriteNotices: id } });
-  return favoriteNotices;
+  return oldFavNoticesArray.includes(noticeID);
 };
 
 module.exports = deleteNoticeFromFavorites;
