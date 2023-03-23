@@ -7,57 +7,59 @@ const locationRegexp =
   /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
 // const birthdayRegexp = /^(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?$/;
 const birthdayRegexp = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/;
-const validCategory = ['sell', 'for-free', 'lost-found']
-const validGender = ['male','female'];
+const validCategory = ['sell', 'for-free', 'lost-found'];
+const validGender = ['male', 'female'];
 
-const noticeSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, 'Set title for notice'],
+const noticeSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: [true, 'Set title for notice'],
+    },
+    breed: {
+      type: String,
+      required: [true, 'Set breed for notice'],
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    birthDate: {
+      type: Date,
+      default: new Date(),
+    },
+    category: {
+      type: String,
+      enum: ['sell', 'for-free', 'lost-found'],
+      required: true,
+    },
+    name: {
+      type: String,
+      default: 'new name',
+    },
+    sex: {
+      type: String,
+      enum: ['male', 'female'],
+      required: true,
+    },
+    price: {
+      type: Number,
+      default: 5,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    comments: {
+      type: String,
+      required: [true, 'Comment is required'],
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
   },
-  breed: {
-    type: String,
-    required: [true, 'Set breed for notice'],
-  },
-  location: {
-    type: String,
-    required: true,
-  },
-  birthDate: {
-    type: Date,
-    default: new Date(),
-  },
-  category: {
-    type: String,
-    enum: ['sell', 'for-free', 'lost-found'],
-    required: true,
-  },
-  name: {
-    type: String,   
-    default: "new name",
-  },
-  sex: {
-    type: String,
-    enum: ['male', 'female'],
-    required: true,
-  },
-  price: {
-    type: Number,
-    default: 5,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
-  comments: {
-    type: String,   
-    required: [true, 'Comment is required'],
-  },
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'user',
-  },
-}, {  timestamps: true}
+  { timestamps: true }
 );
 
 const newNoticeSchema = Joi.object({
@@ -83,7 +85,9 @@ const newNoticeSchema = Joi.object({
     .min(2)
     .max(16)
     .required('Name is required'),
-  category: Joi.string().valid(...validCategory).required('Category is required'),
+  category: Joi.string()
+    .valid(...validCategory)
+    .required('Category is required'),
   sex: Joi.string().valid(...validGender),
   price: Joi.number().min(1),
   comments: Joi.string().min(8).max(120),
@@ -103,6 +107,7 @@ const noticesQueryParam = Joi.object({
       'number.min': `"page" must be equal or greater than {#limit}. You provided: {page}`,
     })
     .optional(),
+  searchQuery: Joi.string().optional(),
 });
 
 noticeSchema.post('save', mongooseErrorHandler);
