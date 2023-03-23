@@ -3,12 +3,6 @@ const { BadRequest, InternalServerError } = require('http-errors');
 const fs = require('fs/promises');
 require('dotenv').config();
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
 const uploadImageToCloudinary = async (req, res, next) => {
   if (req.method === 'options') {
     next();
@@ -18,7 +12,7 @@ const uploadImageToCloudinary = async (req, res, next) => {
       throw BadRequest('Avatar is required');
     }
     const { path: tempUpload } = req.file;
-    const { url } = await cloudinary.uploader.upload(tempUpload, {
+    const { url, public_id } = await cloudinary.uploader.upload(tempUpload, {
       width: 182,
       height: 182,
       crop: 'fill',
@@ -32,9 +26,11 @@ const uploadImageToCloudinary = async (req, res, next) => {
     }
 
     req.url = url;
+    req.public_id = public_id;
     next();
   } catch (error) {
     return next(error);
   }
 };
+
 module.exports = uploadImageToCloudinary;

@@ -5,6 +5,8 @@ const upload = require('./upload');
 const petServices = require('./pets');
 const parseUserToken = require('./parseUserToken');
 const parsePagination = require('./parsePagination');
+const cloudinaryServices = require('./cloudinary');
+const newsServices = require('./news');
 
 module.exports = {
   connectToMongo,
@@ -14,4 +16,6 @@ module.exports = {
   findServices,
   parseUserToken,
   ...parsePagination,
+  cloudinaryServices,
+  newsServices,
 };

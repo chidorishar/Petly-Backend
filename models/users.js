@@ -41,6 +41,9 @@ const userSchema = Schema(
     pets: [{ type: Schema.Types.ObjectId, ref: 'pet' }],
     notices: [{ type: Schema.Types.ObjectId, ref: 'notice' }],
     avatarURL: { type: String, default: null },
+    cloudinaryImagePublicId: {
+      type: String,
+    },
   },
 
   {

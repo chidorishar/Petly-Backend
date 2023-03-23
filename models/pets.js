@@ -21,6 +21,10 @@ const petSchema = new Schema(
       type: String,
       required: [true, 'Photo is required'],
     },
+    cloudinaryImagePublicId: {
+      type: String,
+      required: [true, "Cloudinary image ID wasn't supplied!"],
+    },
     comment: {
       type: String,
       required: [true, 'Comment is required'],
