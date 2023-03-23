@@ -4,6 +4,7 @@ const userServices = require('./users');
 const upload = require('./upload');
 const petServices = require('./pets');
 const cloudinaryServices = require('./cloudinary');
+const newsServices = require('./news');
 
 module.exports = {
   connectToMongo,
@@ -12,4 +13,5 @@ module.exports = {
   petServices,
   findServices,
   cloudinaryServices,
+  newsServices,
 };

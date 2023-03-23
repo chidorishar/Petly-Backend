@@ -29,7 +29,7 @@ const newsSchema = Schema(
   { versionKey: false }
 );
 
-const getNewsQueryParam = Joi.object({
+const getAllNewsQueryParam = Joi.object({
   limit: Joi.number()
     .min(1)
     .messages({
@@ -48,5 +48,5 @@ const News = model('news', newsSchema);
 
 module.exports = {
   News,
-  getNewsQueryParam,
+  getAllNewsQueryParam,
 };
