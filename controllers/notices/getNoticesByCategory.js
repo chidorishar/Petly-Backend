@@ -6,6 +6,7 @@ const validCategory = ['sell', 'for-free', 'lost-found'];
 const getNoticesByCategory = async (req, res) => {  
   const category = req.params.category;
   if (!validCategory.includes(category)) {
+const { utils } = require('../../services');
     throw new BadRequest(`Not found such category ${category}`);
   }
 
@@ -13,6 +14,7 @@ const getNoticesByCategory = async (req, res) => {
   let  userId = null;
   try {
     await parseUserToken(req);
+    await utils.parseUserToken(req);
     userId = req.user;
   } catch (error) {  }
 

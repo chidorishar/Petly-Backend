@@ -1,12 +1,11 @@
-const { parseUserToken } = require("../services");
-
+const { utils } = require('../services');
 
 module.exports = async (req, res, next) => {
   if (req.method === 'options') {
     next();
   }
   try {
-    await parseUserToken(req);
+    await utils.parseUserToken(req);
 
     next();
   } catch (error) {
