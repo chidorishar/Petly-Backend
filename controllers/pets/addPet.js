@@ -6,6 +6,7 @@ const addPet = async (req, res) => {
   const newPet = await petServices.createPet({
     ...req.body,
     photo: req.url,
+    cloudinaryImagePublicId: req.public_id,
     owner: _id,
   });
   await userServices.addPetForUserWithId(_id, newPet._id);
