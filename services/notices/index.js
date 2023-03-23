@@ -1,6 +1,7 @@
 const getNoticeById = require('./getNoticeById');
 const getNoticesByCategoryAndSearchQuery = require('./getNoticesByCategoryAndSearchQuery');
 const getOwnNotices = require('./getOwnNotices');
+const getUserNoticesBySearchQuery = require('./getUserNoticesBySearchQuery');
 const getFavoriteNotices = require('./getFavoriteNotices');
 const addNoticeToFavorites = require('./addNoticeToFavorites');
 const addNotice = require('./addNotice');
@@ -11,6 +12,7 @@ module.exports = {
   getNoticeById,
   getNoticesByCategoryAndSearchQuery,
   getOwnNotices,
+  getUserNoticesBySearchQuery,
   getFavoriteNotices,
   addNoticeToFavorites,
   addNotice,
