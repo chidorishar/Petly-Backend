@@ -1,18 +1,16 @@
 const { BadRequest } = require('http-errors');
 
 const { utils } = require('../../services');
-const service = require('../../services/notices');
+const { noticesServices } = require('../../services');
 
-const validCategoryAllUsers = ['sell', 'for-free', 'lost-found'];
-const validCategoryLoggedUsers = ['favorite', 'own'];
+const validCategories = ['sell', 'for-free', 'lost-found'];
 
-const getNoticesByCategoryAndSearchQueryAndSearchQuery = async (req, res) => {
+const getNoticesByCategoryAndSearchQuery = async (req, res) => {
   const { category } = req.params;
   const { page, limit, searchQuery } = req.query;
 
-  const isCategoryForAllUsers = validCategoryAllUsers.includes(category);
-  const isCategoryForLoggedUsers = validCategoryLoggedUsers.includes(category);
-  if (!isCategoryForAllUsers && !isCategoryForLoggedUsers) {
+  const isValidCategory = validCategories.includes(category);
+  if (!isValidCategory) {
     throw new BadRequest(`Not found such category ${category}`);
   }
 
@@ -24,7 +22,7 @@ const getNoticesByCategoryAndSearchQueryAndSearchQuery = async (req, res) => {
   } catch (error) {}
 
   const paginationObj = utils.parsePagination(page, limit);
-  const notices = await service.getNoticesByCategoryAndSearchQuery(
+  const notices = await noticesServices.getNoticesByCategoryAndSearchQuery(
     category,
     searchQuery,
     userId,
@@ -34,4 +32,4 @@ const getNoticesByCategoryAndSearchQueryAndSearchQuery = async (req, res) => {
   res.json(notices);
 };
 
-module.exports = getNoticesByCategoryAndSearchQueryAndSearchQuery;
+module.exports = getNoticesByCategoryAndSearchQuery;

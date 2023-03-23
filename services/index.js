@@ -6,6 +6,7 @@ const petServices = require('./pets');
 const utils = require('./utils');
 const cloudinaryServices = require('./cloudinary');
 const newsServices = require('./news');
+const noticesServices = require('./notices');
 
 module.exports = {
   connectToMongo,
@@ -16,4 +17,5 @@ module.exports = {
   utils,
   cloudinaryServices,
   newsServices,
+  noticesServices,
 };
