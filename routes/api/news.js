@@ -12,5 +12,10 @@ router.get(
   validateQueryParams(getAllNewsQueryParam),
   ctrlWrapper(ctrl.getAllNews)
 );
+router.get(
+  '/:searchQuery',
+  validateQueryParams(getAllNewsQueryParam),
+  ctrlWrapper(ctrl.getNewsBySearchQuery)
+);
 
 module.exports = router;
