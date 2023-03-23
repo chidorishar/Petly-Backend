@@ -1,14 +1,14 @@
-const service = require("../../services/notices");
+const service = require('../../services/notices');
+const { utils } = require('../../services');
 
-const getFavoriteNotices = async(req, res) => { 
-    let { page = 1, limit = 20 } = req.query;
-    limit = parseInt(limit) > 20 ? 20 : parseInt(limit);
-    const skip = (parseInt(page) - 1) * limit;
+const getFavoriteNotices = async (req, res) => {
+  const { page, limit } = req.query;
+  const paginationOpts = utils.parsePagination(page, limit);
 
-    const userId = req.user;
-    
-    const notices = await service.getFavoriteNotices(userId, {skip, limit});
-    res.json(notices);
-}
+  const userId = req.user;
+
+  const notices = await service.getFavoriteNotices(userId, paginationOpts);
+  res.json(notices);
+};
 
 module.exports = getFavoriteNotices;
