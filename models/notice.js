@@ -5,7 +5,8 @@ const { mongooseErrorHandler } = require('../helpers');
 const nameRegexp = /^([a-zA-Zа-яА-ЯёЁёЁЇїІіҐґЄє\s]+)$/;
 const locationRegexp =
   /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
-const birthdayRegexp = /^(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?$/;
+// const birthdayRegexp = /^(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?$/;
+const birthdayRegexp = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/;
 const validCategory = ['sell', 'for-free', 'lost-found']
 const validGender = ['male','female'];
 
@@ -52,16 +53,12 @@ const noticeSchema = new Schema({
     type: String,   
     required: [true, 'Comment is required'],
   },
-  date: {
-    type: Date,
-    default: Date.now,
-    description: 'Notice creation date',
-  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'user',
   },
-});
+}, {  timestamps: true}
+);
 
 const newNoticeSchema = Joi.object({
   title: Joi.string()

@@ -6,7 +6,7 @@ const getFavoriteNotices = async(req, res) => {
     const skip = (parseInt(page) - 1) * limit;
 
     const userId = req.user;
-    // console.log(userId);
+    
     const notices = await service.getFavoriteNotices(userId, {skip, limit});
     res.json(notices);
 }
