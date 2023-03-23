@@ -50,6 +50,10 @@ const noticeSchema = new Schema(
       type: String,
       required: true,
     },
+    cloudinaryImagePublicId: {
+      type: String,
+      required: [true, "Cloudinary image ID wasn't supplied!"],
+    },
     comments: {
       type: String,
       required: [true, 'Comment is required'],
