@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {*} notices - must be populated notices array!!!
+ * @param {*} userDoc - must be userDoc without populated "notices" or "favoriteNotices" fields!!!
+ * @returns
+ */
 async function addFieldsRelativeToUserData(notices, userDoc) {
   const userId = userDoc._id.toString();
   console.log(userId);

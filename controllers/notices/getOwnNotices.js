@@ -1,14 +1,20 @@
-const service = require("../../services/notices");
+const { noticesServices } = require('../../services');
+const { utils } = require('../../services');
 
-const getOwnNotices = async(req, res) => { 
-    let { page = 1, limit = 20 } = req.query;
-    limit = parseInt(limit) > 20 ? 20 : parseInt(limit);
-    const skip = (parseInt(page) - 1) * limit;
+const getOwnNotices = async (req, res) => {
+  const { page, limit, searchQuery } = req.query;
+  const userId = req.user;
 
-    // console.log("In controller")
-    const userId = req.user;
-    const notices = await service.getOwnNotices(userId, {skip, limit});
-    res.json(notices);
-}
+  const paginationData = utils.parsePagination(page, limit);
+
+  const notices = await noticesServices.getUserNoticesBySearchQuery(
+    true,
+    searchQuery,
+    userId,
+    paginationData
+  );
+
+  res.json(notices);
+};
 
 module.exports = getOwnNotices;

@@ -1,13 +1,19 @@
-const service = require('../../services/notices');
+const { noticesServices } = require('../../services');
 const { utils } = require('../../services');
 
 const getFavoriteNotices = async (req, res) => {
-  const { page, limit } = req.query;
-  const paginationOpts = utils.parsePagination(page, limit);
-
+  const { page, limit, searchQuery } = req.query;
   const userId = req.user;
 
-  const notices = await service.getFavoriteNotices(userId, paginationOpts);
+  const paginationData = utils.parsePagination(page, limit);
+
+  const notices = await noticesServices.getUserNoticesBySearchQuery(
+    false,
+    searchQuery,
+    userId,
+    paginationData
+  );
+
   res.json(notices);
 };
 
