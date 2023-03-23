@@ -1,7 +1,7 @@
 const { BadRequest } = require('http-errors');
 
 const { Notice, User } = require('../../models');
-const { filterNotices } = require('./utils/filterNotices.js');
+const utils = require('./utils');
 
 /**
  *
@@ -25,25 +25,19 @@ const getNoticesByCategoryAndSearchQuery = async (
     ],
   };
 
-  const notices = await filterNotices(Notice, filterObj, paginationObj);
+  const notices = await utils.filterNotices(Notice, filterObj, paginationObj);
   if (!notices) {
     throw new BadRequest(`Not found such category ${category}`);
   }
   if (!userId) return notices;
 
   const userWithId = await User.findOne({ _id: userId });
-  const userFavoriteNotices = userWithId?.favoriteNotices;
+  const extendedNotices = await utils.addFieldsRelativeToUserData(
+    notices,
+    userWithId
+  );
 
-  return notices.map(({ _doc }) => {
-    const isOwner = _doc.owner.toString() === userId;
-    const isFavorite = userFavoriteNotices.includes(_doc._id);
-
-    return {
-      ..._doc,
-      isOwner,
-      isFavorite,
-    };
-  });
+  return extendedNotices;
 };
 
 module.exports = getNoticesByCategoryAndSearchQuery;
