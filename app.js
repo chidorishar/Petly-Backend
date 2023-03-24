@@ -3,7 +3,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs/promises');
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
@@ -26,6 +27,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/notices', noticeRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/services', servicesRouter);
+app.use('/api-swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((err, req, res, next) => {
   if (req.file) fs.unlink(req.file.path);
