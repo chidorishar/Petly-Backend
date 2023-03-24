@@ -1,985 +1,952 @@
 {
-	"openapi": "3.0.3",
-	"info": {
-		"version": "1.0.0",
-		"title": "PETLY_REST",
-		"description": "Documentation swagger-ui-express",
-		"license": {
-			"name": "",
-			"url": ""
-		}
-	},
-	"consumes": [
-		"application/json",
-		"multipart/form-data"
-	],
-	"produces": [
-		"application/json"
-	],
-	"servers": [
-		{
-			"url": "http://localhost:4000"
-		}
-	],
-	"tags": [
-		{
-			"name": "Auth",
-			"description": "Authorization endpoints"
-		},
-		{
-			"name": "User",
-			"description": "Authorization endpoints"
-		},
-		{
-			"name": "News",
-			"description": "Authorization endpoints"
-		},
-		{
-			"name": "Notices",
-			"description": "Authorization endpoints"
-		},
-		{
-			"name": "Notices",
-			"description": "notices for auth user"
-		},
-		{
-			"name": "Favorites",
-			"description": "Authorization endpoints"
-		},
-		{
-			"name": "Sevices",
-			"description": "notices for auth user"
-		}
-	],
-	"paths": {
-		"/api/auth/register": {
-			"post": {
-				"tags": [
-					"Auth"
-				],
-				"summary": "User registration",
-				"parameters": [],
-				"security": [
-					{
-						"Bearer": []
-					}
-				],
-				"requestBody": {
-					"description": "Registration's object",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/RegistrationRequest"
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RegistrationResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad request (invalid request body)",
-						"content": {}
-					},
-					"409": {
-						"description": "Provided email already exists",
-						"content": {}
-					}
-				}
-			}
-		},
-		"/api/auth/login": {
-			"post": {
-				"tags": [
-					"Auth"
-				],
-				"summary": "User login",
-				"parameters": [],
-				"security": [
-					{
-						"Bearer": []
-					}
-				],
-				"requestBody": {
-					"description": "Login object",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/LoginRequest"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "User is logged in.",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/LoginResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Email or password is wrong"
-					}
-				}
-			}
-		},
-		"/api/auth/logout": {
-			"post": {
-				"tags": [
-					"Auth"
-				],
-				"summary": "Logs out current logged in user",
-				"parameters": [],
-				"security": [
-					{
-						"Bearer": []
-					}
-				],
-				"operationId": "logoutUser",
-				"responses": {
-					"204": {
-						"description": "User logout"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"500": {
-						"description": "Server error."
-					}
-				}
-			}
-		},
-		"/api/users": {
-			"get": {
-				"tags": [
-					"User"
-				],
-				"summary": "Information about current user",
-				"description": "",
-				"operationId": "getUser",
-				"parameters": [],
-				"responses": {
-					"200": {
-						"description": "successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UserPetsSchema"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"500": {
-						"description": "Server error."
-					}
-				}
-			}
-		},
-		"/api/users/pets": {
-			"post": {
-				"tags": [
-					"User"
-				],
-				"summary": "Information about current user",
-				"description": "",
-				"operationId": "getUser",
-				"parameters": [],
-				"responses": {
-					"200": {
-						"description": "successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AddPetResponseSchema"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"500": {
-						"description": "Server error."
-					}
-				}
-			}
-		},
-		"/api/users/": {
-			"patch": {
-				"tags": [
-					"User"
-				],
-				"summary": "Information about current user",
-				"description": "",
-				"operationId": "getUser",
-				"parameters": [],
-				"responses": {
-					"200": {
-						"description": "successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UdpateUserSchema"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"500": {
-						"description": "Server error."
-					}
-				}
-			}
-		},
-		"/api/users/avatar": {
-			"patch": {
-				"tags": [
-					"User"
-				],
-				"summary": "Update user`s avatar",
-				"description": "",
-				"operationId": "updateUsersAvatar",
-				"parameters": [],
-				"requestBody": {
-					"description": "",
-					"required": true,
-					"content": {
-						"multipart/form-data": {
-							"schema": {
-								"$ref": "#/components/schemas/AvatarUser"
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UserAvatar"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				},
-				"security": [
-					{
-						"Bearer": []
-					}
-				]
-			}
-		},
-		"/api/users/pets{id}": {
-			"delete": {
-				"tags": [
-					"User"
-				],
-				"summary": "Deletes a pet by ID",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"description": "ID of the pet to delete",
-						"schema": {
-							"type": "string",
-							"format": "uuid"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Pet deleted successfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"message": {
-											"type": "string"
-										},
-										"result": {
-											"$ref": "#/components/schemas/PetDeleteId"
-										}
-									}
-								}
-							}
-						}
-					},
-					"404": {
-						"description": "Pet not found"
-					}
-				}
-			}
-		},
-		"/api/news": {
-			"get": {
-				"tags": [
-					"News"
-				],
-				"summary": "Get all news",
-				"description": "",
-				"operationId": "getNews",
-				"parameters": [],
-				"responses": {
-					"200": {
-						"description": "successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/NewsResponseQuery"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/news/": {
-			"get": {
-				"tags": [
-					"News"
-				],
-				"summary": "Get news articles by search query and page number",
-				"parameters": [
-					{
-						"in": "query",
-						"name": "searchQuery",
-						"schema": {
-							"type": "string"
-						},
-						"description": "Search query for news articles"
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "integer",
-							"minimum": 1
-						},
-						"description": "Page number of news articles to retrieve"
-					},
-					{
-						"in": "query",
-						"name": "limit",
-						"schema": {
-							"type": "integer",
-							"minimum": 1,
-							"maximum": 100,
-							"default": 10
-						},
-						"description": "Maximum number of news articles to retrieve per page"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Successful response",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/NewsResponseQuery"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/notices/category/{categoryName}": {
-			"get": {
-				"tags": [
-					"Notices"
-				],
-				"summary": "Get notices by category",
-				"description": "Categories names: sell, for-free, lost-found",
-				"operationId": "get Notice",
-				"parameters": [
-					{
-						"name": "categoryName",
-						"in": "path",
-						"required": true
-					},
-					{
-						"name": "page",
-						"in": "query",
-						"type": "integer"
-					},
-					{
-						"name": "limit",
-						"in": "query",
-						"type": "integer"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/NoticesByCategory"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad request"
-					},
-					"404": {
-						"description": "Not found"
-					}
-				}
-			}
-		}
-	},
-	"components": {
-		"schemas": {
-			"RegistrationRequest": {
-				"type": "object",
-				"required": [
-					"email",
-					"password"
-				],
-				"properties": {
-					"email": {
-						"type": "string",
-						"example": "aladin1@gmail.com"
-					},
-					"password": {
-						"type": "string",
-						"example": "Aladin1989"
-					},
-					"name": {
-						"type": "string",
-						"example": "User"
-					},
-					"location": {
-						"type": "string",
-						"example": "City, Region"
-					},
-					"phone": {
-						"type": "string",
-						"example": "+380000000000"
-					}
-				}
-			},
-			"RegistrationResponse": {
-				"type": "object",
-				"properties": {
-					"status": {
-						"type": "string",
-						"description": "status: success"
-					},
-					"code": {
-						"type": "string",
-						"description": "201"
-					},
-					"data": {
-						"type": "object",
-						"properties": {
-							"user": {
-								"type": "object",
-								"properties": {
-									"email": {
-										"type": "string",
-										"description": "aladin12@gmail.com"
-									}
-								}
-							}
-						}
-					}
-				},
-				"example": {
-					"status": "success",
-					"code": "201",
-					"data": {
-						"user": {
-							"email": "aladin12@gmail.com"
-						}
-					}
-				}
-			},
-			"LoginRequest": {
-				"type": "object",
-				"required": [
-					"email",
-					"password"
-				],
-				"properties": {
-					"email": {
-						"type": "string",
-						"description": "User's email"
-					},
-					"password": {
-						"type": "string",
-						"description": "User's password"
-					}
-				},
-				"example": {
-					"email": "aladin1@gmail.com",
-					"password": "Aladin1989"
-				}
-			},
-			"LoginResponse": {
-				"type": "object",
-				"properties": {
-					"status": {
-						"type": "string",
-						"description": "success"
-					},
-					"code": {
-						"type": "string",
-						"description": "200"
-					},
-					"data": {
-						"type": "object",
-						"properties": {
-							"accessToken": {
-								"type": "string"
-							},
-							"user": {
-								"type": "object",
-								"properties": {
-									"email": {
-										"type": "string",
-										"description": "aladin1@gmail.com"
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			"UserPetsSchema": {
-				"type": "object",
-				"properties": {
-					"user": {
-						"type": "object",
-						"$ref": "#/components/schemas/User"
-					}
-				}
-			},
-			"User": {
-				"type": "object",
-				"properties": {
-					"_id": {
-						"type": "string",
-						"description": "63c6f80fab4874e768f0dd83"
-					},
-					"email": {
-						"type": "string",
-						"description": "aladin1@gmail.com"
-					},
-					"name": {
-						"type": "string",
-						"description": "User"
-					},
-					"location": {
-						"type": "string",
-						"description": "City, Region"
-					},
-					"phone": {
-						"type": "string",
-						"format": "date-time",
-						"description": "+380000000000"
-					},
-					"birthday": {
-						"type": "string",
-						"description": "01.01.1900"
-					},
-					"avatarURL": {
-						"type": "string",
-						"format": "uri",
-						"description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg"
-					},
-					"favoriteNotices": {
-						"type": "array",
-						"description": []
-					},
-					"pets": {
-						"type": "array",
-						"description": []
-					}
-				},
-				"example": {
-					"_id": "63c6f80fab4874e768f0dd83",
-					"email": "aladin1@gmail.com",
-					"name": "User",
-					"location": "City, Region",
-					"phone": "+380000000000",
-					"birthday": "01.01.1900",
-					"avatarURL": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg",
-					"favoriteNotices": [],
-					"pets": []
-				}
-			},
-			"AddPetResponseSchema": {
-				"type": "object",
-				"properties": {
-					"message": {
-						"type": "string",
-						"description": "A message indicating the success or failure of the request."
-					},
-					"pet": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string",
-								"description": "The name of the pet."
-							},
-							"birthday": {
-								"type": "string",
-								"format": "date-time",
-								"description": "The birthday of the pet in ISO 8601 format."
-							},
-							"breed": {
-								"type": "string",
-								"description": "The breed of the pet."
-							},
-							"photo": {
-								"type": "string",
-								"description": "The URL of the pet's photo."
-							},
-							"cloudinaryImagePublicId": {
-								"type": "string",
-								"description": "The public ID of the pet's photo in Cloudinary."
-							},
-							"comment": {
-								"type": "string",
-								"description": "A comment about the pet."
-							},
-							"owner": {
-								"type": "string",
-								"description": "The ID of the pet's owner."
-							},
-							"_id": {
-								"type": "string",
-								"description": "The unique identifier for the pet."
-							}
-						}
-					}
-				},
-				"example": {
-					"message": "success",
-					"pet": {
-						"name": "aladinIIIIC",
-						"birthday": "2021-01-02T00:00:00.000Z",
-						"breed": "smth",
-						"photo": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679755088/tq7njc0u391jozngrxi9.jpg",
-						"cloudinaryImagePublicId": "tq7njc0u391jozngrxi9",
-						"comment": "Bestiessss",
-						"owner": "64199cae9bf44e2cfbb49abb",
-						"_id": "641f074cfe09534ab3497f2e"
-					}
-				}
-			},
-			"UdpateUserSchema": {
-				"type": "object",
-				"properties": {
-					"_id": {
-						"type": "string",
-						"description": "The unique identifier for the user."
-					},
-					"email": {
-						"type": "string",
-						"description": "The email address of the user."
-					},
-					"name": {
-						"type": "string",
-						"description": "The name of the user."
-					},
-					"location": {
-						"type": "string",
-						"description": "The location of the user."
-					},
-					"phone": {
-						"type": "string",
-						"description": "The phone number of the user."
-					},
-					"birthday": {
-						"type": "string",
-						"format": "date-time",
-						"description": "The birthday of the user in ISO 8601 format."
-					},
-					"avatarURL": {
-						"type": "string",
-						"description": "The URL of the user's avatar image."
-					}
-				},
-				"example": {
-					"_id": "64199cae9bf44e2cfbb49abb",
-					"email": "aladin@gmail.com",
-					"name": "New user",
-					"location": "City, Region",
-					"phone": "+380000000000",
-					"birthday": "2023-03-21T12:01:17.392Z",
-					"avatarURL": "//www.gravatar.com/avatar/ae71bc33abf6b98cc9362d80c6de80a9?s=250"
-				}
-			},
-			"AvatarUser": {
-				"type": "object",
-				"properties": {
-					"avatar": {
-						"type": "string",
-						"format": "binary"
-					}
-				}
-			},
-			"UserAvatar": {
-				"type": "object",
-				"properties": {
-					"avatarImg": {
-						"type": "string",
-						"description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg"
-					}
-				}
-			},
-			"PetDeleteId": {
-				"type": "object",
-				"properties": {
-					"name": {
-						"type": "string",
-						"description": "aladinIIIIC"
-					},
-					"birthday": {
-						"type": "string",
-						"format": "date",
-						"description": "2021-01-02"
-					},
-					"breed": {
-						"type": "string",
-						"description": "smth"
-					},
-					"photo": {
-						"type": "string",
-						"description": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679402651/r53qneskrbztpdngitac.jpg"
-					},
-					"comment": {
-						"type": "string",
-						"description": "Bestiessss"
-					},
-					"owner": {
-						"type": "string",
-						"description": "64199cae9bf44e2cfbb49abb"
-					}
-				},
-				"example": {
-					"message": "Pet with ID 6419a69a14b775fa0ca34764 deleted",
-					"result": {
-						"_id": "6419a69a14b775fa0ca34764",
-						"name": "aladinIIIIC",
-						"birthday": "2021-01-02",
-						"breed": "smth",
-						"photo": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679402651/r53qneskrbztpdngitac.jpg",
-						"comment": "Besties",
-						"owner": "64199cae9bf44e2cfbb49abb"
-					}
-				}
-			},
-			"NewsResponse": {
-				"type": "object",
-				"properties": {
-					"_id": {
-						"type": "string",
-						"description": "63bf123567b57c04689197d2"
-					},
-					"title": {
-						"type": "string",
-						"description": "Умови змінились: як з України вивести тварину за кордон"
-					},
-					"url": {
-						"type": "string",
-						"description": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html"
-					},
-					"description": {
-						"type": "string",
-						"description": "description of the news"
-					},
-					"date": {
-						"type": "string",
-						"format": "date-time",
-						"description": "2022-07-24"
-					}
-				},
-				"example": {
-					"message": "success",
-					"result": [
-						{
-							"_id": "6419a69a14b775fa0ca34764",
-							"tittle": "Умови змінились: як з України вивести тварину за кордон",
-							"url": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html",
-							"description": "description of the news",
-							"date": "2022-07-24"
-						}
-					]
-				}
-			},
-			"NewsResponseQuery": {
-				"type": "object",
-				"properties": {
-					"_id": {
-						"type": "string",
-						"description": "63bf123567b57c04689197d2"
-					},
-					"title": {
-						"type": "string",
-						"description": "Умови змінились: як з України вивести тварину за кордон"
-					},
-					"url": {
-						"type": "string",
-						"description": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html"
-					},
-					"description": {
-						"type": "string",
-						"description": "description of the news"
-					},
-					"date": {
-						"type": "string",
-						"format": "date-time",
-						"description": "2022-07-24"
-					}
-				},
-				"example": {
-					"message": "success",
-					"result": [
-						{
-							"_id": "6419a69a14b775fa0ca34764",
-							"tittle": "Умови змінились: як з України вивести тварину за кордон",
-							"url": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html",
-							"description": "description of the news",
-							"date": "2022-07-24"
-						}
-					]
-				}
-			},
-			"NoticesByCategory": {
-				"type": "object",
-				"properties": {
-					"_id": {
-						"type": "string",
-						"description": "641cb050b8f2995b62a7caca"
-					},
-					"title": {
-						"type": "string",
-						"description": "Sell"
-					},
-					"breed": {
-						"type": "string",
-						"description": "sdasdasd"
-					},
-					"location": {
-						"type": "string",
-						"description": "Aaa, aaaa"
-					},
-					"birthDate": {
-						"type": "string",
-						"format": "date-time",
-						"description": "2022-02-01"
-					},
-					"category": {
-						"type": "string",
-						"description": "sell"
-					},
-					"name": {
-						"type": "string",
-						"description": "Veto"
-					},
-					"sex": {
-						"type": "string",
-						"description": "male"
-					},
-					"price": {
-						"type": "number",
-						"description": "5"
-					},
-					"image": {
-						"type": "string",
-						"format": "uri",
-						"description": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679601744/yrdskf8njujg0ro6xycu.jpg"
-					},
-					"comments": {
-						"type": "string",
-						"description": "SuperDuperUniquiOleh"
-					},
-					"owner": {
-						"type": "string",
-						"description": "6418d6dedc944e0849cda3d3"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time",
-						"description": "2023-03-23T20:02:24.431Z"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time",
-						"description": "2023-03-23T20:02:24.431Z"
-					},
-					"__v": {
-						"type": "number",
-						"description": "0"
-					},
-					"isOwner": {
-						"type": "boolean",
-						"description": "false"
-					},
-					"isFavorite": {
-						"type": "boolean",
-						"description": "false"
-					}
-				},
-				"example": {
-					"_id": "641cb050b8f2995b62a7caca",
-					"title": "Sell",
-					"breed": "sdasdasd",
-					"location": "Aaa, aaaa",
-					"birthDate": "2022-02-01T22:00:00.000Z",
-					"category": "sell",
-					"name": "Veto",
-					"sex": "male",
-					"price": 5,
-					"image": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679601744/yrdskf8njujg0ro6xycu.jpg",
-					"comments": "SuperDuperUniquiOleh",
-					"owner": "6418d6dedc944e0849cda3d3",
-					"createdAt": "2023-03-23T20:02:24.431Z",
-					"updatedAt": "2023-03-23T20:02:24.431Z",
-					"__v": 0,
-					"isOwner": false,
-					"isFavorite": false
-				}
-			},
-			"securitySchemes": {
-				"Bearer": {
-					"type": "http",
-					"scheme": "bearer",
-					"bearerFormat": "JWT"
-				}
-			}
-		}
-	}
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "PETLY_REST",
+    "description": "Documentation swagger-ui-express",
+    "license": {
+      "name": "",
+      "url": ""
+    }
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "http://localhost:4000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "User",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "News",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Notices",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Notices",
+      "description": "notices for auth user"
+    },
+    {
+      "name": "Favorites",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Sevices",
+      "description": "notices for auth user"
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User is logged in.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email or password is wrong"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logs out current logged in user",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "operationId": "logoutUser",
+        "responses": {
+          "204": {
+            "description": "User logout"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Information about current user",
+        "description": "",
+        "operationId": "getUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPetsSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/api/users/pets": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Information about current user",
+        "description": "",
+        "operationId": "getUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPetResponseSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/api/users/": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Information about current user",
+        "description": "",
+        "operationId": "getUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UdpateUserSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/api/users/avatar": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update user`s avatar",
+        "description": "",
+        "operationId": "updateUsersAvatar",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AvatarUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAvatar"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/users/pets{id}": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Deletes a pet by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the pet to delete",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pet deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/PetDeleteId"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      }
+    },
+    "/api/news": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get all news",
+        "description": "",
+        "operationId": "getNews",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewsResponseQuery"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/news/": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get news articles by search query and page number",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "searchQuery",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query for news articles"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Page number of news articles to retrieve"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "description": "Maximum number of news articles to retrieve per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewsResponseQuery"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notices/category/{categoryName}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get notices by category",
+        "description": "Categories names: sell, for-free, lost-found",
+        "operationId": "get Notice",
+        "parameters": [
+          {
+            "name": "categoryName",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticesByCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "aladin1@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Aladin1989"
+          },
+          "name": {
+            "type": "string",
+            "example": "User"
+          },
+          "location": {
+            "type": "string",
+            "example": "City, Region"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+380000000000"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "status: success"
+          },
+          "code": {
+            "type": "string",
+            "description": "201"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "aladin12@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "status": "success",
+          "code": "201",
+          "data": {
+            "user": {
+              "email": "aladin12@gmail.com"
+            }
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password"
+          }
+        },
+        "example": {
+          "email": "aladin1@gmail.com",
+          "password": "Aladin1989"
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "success"
+          },
+          "code": {
+            "type": "string",
+            "description": "200"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "aladin1@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserPetsSchema": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "63c6f80fab4874e768f0dd83"
+          },
+          "email": {
+            "type": "string",
+            "description": "aladin1@gmail.com"
+          },
+          "name": {
+            "type": "string",
+            "description": "User"
+          },
+          "location": {
+            "type": "string",
+            "description": "City, Region"
+          },
+          "phone": {
+            "type": "string",
+            "format": "date-time",
+            "description": "+380000000000"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "01.01.1900"
+          },
+          "avatarURL": {
+            "type": "string",
+            "format": "uri",
+            "description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg"
+          },
+          "favoriteNotices": {
+            "type": "array",
+            "description": []
+          },
+          "pets": {
+            "type": "array",
+            "description": []
+          }
+        },
+        "example": {
+          "_id": "63c6f80fab4874e768f0dd83",
+          "email": "aladin1@gmail.com",
+          "name": "User",
+          "location": "City, Region",
+          "phone": "+380000000000",
+          "birthday": "01.01.1900",
+          "avatarURL": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg",
+          "favoriteNotices": [],
+          "pets": []
+        }
+      },
+      "AddPetResponseSchema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "A message indicating the success or failure of the request."
+          },
+          "pet": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the pet."
+              },
+              "birthday": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The birthday of the pet in ISO 8601 format."
+              },
+              "breed": {
+                "type": "string",
+                "description": "The breed of the pet."
+              },
+              "photo": {
+                "type": "string",
+                "description": "The URL of the pet's photo."
+              },
+              "cloudinaryImagePublicId": {
+                "type": "string",
+                "description": "The public ID of the pet's photo in Cloudinary."
+              },
+              "comment": {
+                "type": "string",
+                "description": "A comment about the pet."
+              },
+              "owner": {
+                "type": "string",
+                "description": "The ID of the pet's owner."
+              },
+              "_id": {
+                "type": "string",
+                "description": "The unique identifier for the pet."
+              }
+            }
+          }
+        },
+        "example": {
+          "message": "success",
+          "pet": {
+            "name": "aladinIIIIC",
+            "birthday": "2021-01-02T00:00:00.000Z",
+            "breed": "smth",
+            "photo": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679755088/tq7njc0u391jozngrxi9.jpg",
+            "cloudinaryImagePublicId": "tq7njc0u391jozngrxi9",
+            "comment": "Bestiessss",
+            "owner": "64199cae9bf44e2cfbb49abb",
+            "_id": "641f074cfe09534ab3497f2e"
+          }
+        }
+      },
+      "UdpateUserSchema": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The unique identifier for the user."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address of the user."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the user."
+          },
+          "location": {
+            "type": "string",
+            "description": "The location of the user."
+          },
+          "phone": {
+            "type": "string",
+            "description": "The phone number of the user."
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The birthday of the user in ISO 8601 format."
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "The URL of the user's avatar image."
+          }
+        },
+        "example": {
+          "_id": "64199cae9bf44e2cfbb49abb",
+          "email": "aladin@gmail.com",
+          "name": "New user",
+          "location": "City, Region",
+          "phone": "+380000000000",
+          "birthday": "2023-03-21T12:01:17.392Z",
+          "avatarURL": "//www.gravatar.com/avatar/ae71bc33abf6b98cc9362d80c6de80a9?s=250"
+        }
+      },
+      "AvatarUser": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "UserAvatar": {
+        "type": "object",
+        "properties": {
+          "avatarImg": {
+            "type": "string",
+            "description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg"
+          }
+        }
+      },
+      "PetDeleteId": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "aladinIIIIC"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date",
+            "description": "2021-01-02"
+          },
+          "breed": {
+            "type": "string",
+            "description": "smth"
+          },
+          "photo": {
+            "type": "string",
+            "description": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679402651/r53qneskrbztpdngitac.jpg"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Bestiessss"
+          },
+          "owner": {
+            "type": "string",
+            "description": "64199cae9bf44e2cfbb49abb"
+          }
+        },
+        "example": {
+          "message": "Pet with ID 6419a69a14b775fa0ca34764 deleted",
+          "result": {
+            "_id": "6419a69a14b775fa0ca34764",
+            "name": "aladinIIIIC",
+            "birthday": "2021-01-02",
+            "breed": "smth",
+            "photo": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679402651/r53qneskrbztpdngitac.jpg",
+            "comment": "Besties",
+            "owner": "64199cae9bf44e2cfbb49abb"
+          }
+        }
+      },
+      "NewsResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "63bf123567b57c04689197d2"
+          },
+          "title": {
+            "type": "string",
+            "description": "Умови змінились: як з України вивести тварину за кордон"
+          },
+          "url": {
+            "type": "string",
+            "description": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the news"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "2022-07-24"
+          }
+        },
+        "example": {
+          "message": "success",
+          "result": [
+            {
+              "_id": "6419a69a14b775fa0ca34764",
+              "tittle": "Умови змінились: як з України вивести тварину за кордон",
+              "url": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html",
+              "description": "description of the news",
+              "date": "2022-07-24"
+            }
+          ]
+        }
+      },
+      "NewsResponseQuery": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "63bf123567b57c04689197d2"
+          },
+          "title": {
+            "type": "string",
+            "description": "Умови змінились: як з України вивести тварину за кордон"
+          },
+          "url": {
+            "type": "string",
+            "description": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the news"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "2022-07-24"
+          }
+        },
+        "example": {
+          "message": "success",
+          "result": [
+            {
+              "_id": "6419a69a14b775fa0ca34764",
+              "tittle": "Умови змінились: як з України вивести тварину за кордон",
+              "url": "https://tsn.ua/exclusive/umovi-zminilis-yak-z-ukrayini-vivesti-tvarinu-za-kordon-2118079.html",
+              "description": "description of the news",
+              "date": "2022-07-24"
+            }
+          ]
+        }
+      },
+      "NoticesByCategory": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "641cb050b8f2995b62a7caca"
+          },
+          "title": {
+            "type": "string",
+            "description": "Sell"
+          },
+          "breed": {
+            "type": "string",
+            "description": "sdasdasd"
+          },
+          "location": {
+            "type": "string",
+            "description": "Aaa, aaaa"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "2022-02-01"
+          },
+          "category": {
+            "type": "string",
+            "description": "sell"
+          },
+          "name": {
+            "type": "string",
+            "description": "Veto"
+          },
+          "sex": {
+            "type": "string",
+            "description": "male"
+          },
+          "price": {
+            "type": "number",
+            "description": "5"
+          },
+          "image": {
+            "type": "string",
+            "format": "uri",
+            "description": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679601744/yrdskf8njujg0ro6xycu.jpg"
+          },
+          "comments": {
+            "type": "string",
+            "description": "SuperDuperUniquiOleh"
+          },
+          "owner": {
+            "type": "string",
+            "description": "6418d6dedc944e0849cda3d3"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "2023-03-23T20:02:24.431Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "2023-03-23T20:02:24.431Z"
+          },
+          "__v": {
+            "type": "number",
+            "description": "0"
+          },
+          "isOwner": {
+            "type": "boolean",
+            "description": "false"
+          },
+          "isFavorite": {
+            "type": "boolean",
+            "description": "false"
+          }
+        },
+        "example": {
+          "_id": "641cb050b8f2995b62a7caca",
+          "title": "Sell",
+          "breed": "sdasdasd",
+          "location": "Aaa, aaaa",
+          "birthDate": "2022-02-01T22:00:00.000Z",
+          "category": "sell",
+          "name": "Veto",
+          "sex": "male",
+          "price": 5,
+          "image": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679601744/yrdskf8njujg0ro6xycu.jpg",
+          "comments": "SuperDuperUniquiOleh",
+          "owner": "6418d6dedc944e0849cda3d3",
+          "createdAt": "2023-03-23T20:02:24.431Z",
+          "updatedAt": "2023-03-23T20:02:24.431Z",
+          "__v": 0,
+          "isOwner": false,
+          "isFavorite": false
+        }
+      },
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+  }
 }
