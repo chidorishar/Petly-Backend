@@ -11,7 +11,9 @@ const deleteOwnNotice = async (req, res) => {
     throw new BadRequest('Notice does not exist or has been already removed');
   }
   // delete image from cloudinary
-  cloudinaryServices.deleteImageFromCloudinary(notice.cloudinaryImagePublicId);
+  await cloudinaryServices.deleteImageFromCloudinary(
+    notice.cloudinaryImagePublicId
+  );
 
   res.json(notice);
 };
