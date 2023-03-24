@@ -48,9 +48,10 @@ const userSchema = Schema(
 
   {
     methods: {
-      setAvatar(path = null) {
+      setAvatar(path = null, cloudinaryImagePublicId = '') {
         const pathToImg = path ?? gravatar.url(this.email, { s: '250' });
         this.avatarURL = pathToImg;
+        this.cloudinaryImagePublicId = cloudinaryImagePublicId;
       },
       // Хеш пароля при регістрації
       setPassword: function (password) {
