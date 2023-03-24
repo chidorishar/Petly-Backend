@@ -5,13 +5,17 @@ const {
   validateBody,
   ctrlWrapper,
   userValidation,
+  uploadImageToCloudinary,
 } = require('../../middlewares');
+const { upload } = require('../../services');
 const ctrl = require('../../controllers/auth');
 const { userJoiRegisterSchema, userJoiLoginSchema } = require('../../models');
 
 router.post(
   '/register',
+  upload.single('photo'),
   validateBody(userJoiRegisterSchema),
+  uploadImageToCloudinary,
   ctrlWrapper(ctrl.register)
 );
 router.post(
