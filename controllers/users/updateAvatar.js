@@ -5,10 +5,12 @@ const updateAvatar = async (req, res) => {
   const ownerID = req.user;
   const { url, public_id } = req;
   const user = await User.findById(ownerID);
+  const currAvatCloudID = user.cloudinaryImagePublicId;
 
-  await cloudinaryServices.deleteImageFromCloudinary(user.cloudinaryImagePublicId);
+  if (currAvatCloudID)
+    await cloudinaryServices.deleteImageFromCloudinary(currAvatCloudID);
   user.setAvatar(url, public_id);
-  user.save();
+  await user.save();
 
   res.status(201).end();
 };

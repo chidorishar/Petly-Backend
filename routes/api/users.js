@@ -36,7 +36,7 @@ router.patch(
 router.patch(
   '/avatar',
   userValidation,
-  upload.single('photo'),
+  upload.single('avatarImg'),
   uploadImageToCloudinary,
   ctrlWrapper(updateAvatar)
 );
