@@ -1,15 +1,17 @@
 const getNoticeById = require('./getNoticeById');
-const getNoticesByCategory = require('./getNoticesByCategory');
-const getOwnNotices = require('./getOwnNotices');
-const getFavoriteNotices = require('./getFavoriteNotices');
+const getNoticesByCategoryAndSearchQuery = require('./getNoticesByCategoryAndSearchQuery');
+const getUserNoticesBySearchQuery = require('./getUserNoticesBySearchQuery');
 const addNoticeToFavorites = require('./addNoticeToFavorites');
 const addNotice = require('./addNotice');
+const deleteOwnNotice = require('./deleteOwnNotice');
+const deleteNoticeFromFavorites = require('./deleteNoticeFromFavorites');
 
 module.exports = {
   getNoticeById,
-  getNoticesByCategory,
-  getOwnNotices,
-  getFavoriteNotices,
+  getNoticesByCategoryAndSearchQuery,
+  getUserNoticesBySearchQuery,
   addNoticeToFavorites,
-  addNotice
+  addNotice,
+  deleteOwnNotice,
+  deleteNoticeFromFavorites,
 };
