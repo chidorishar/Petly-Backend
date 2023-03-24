@@ -9,7 +9,6 @@ const register = async (req, res) => {
     throw new Conflict(`User with email ${email} already exists`);
   }
 
-  const {public_id, url} = req;
   const newUser = await userServices.createUser({
     name,
     email,
@@ -17,7 +16,7 @@ const register = async (req, res) => {
     phone,
   });
   newUser.setPassword(password);
-  newUser.setAvatar(url, public_id);
+  newUser.setAvatar(null, '');
   const savedUser = await newUser.save();
   if (!savedUser) throw new InternalServerError('Failed to save new user');
 
