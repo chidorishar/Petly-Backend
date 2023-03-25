@@ -1,7 +1,6 @@
 const { InternalServerError, Unauthorized } = require('http-errors');
 
-const { userServices } = require('../../services');
-const { createToken } = require('services/utils/createToken');
+const { userServices, createToken } = require('../../services');
 
 const login = async (req, res) => {
   const { email, password } = req.body;

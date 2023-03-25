@@ -1,7 +1,6 @@
 const { InternalServerError, Conflict } = require('http-errors');
 
-const { createToken } = require('services/utils/createToken');
-const { userServices } = require('../../services');
+const { userServices, createToken } = require('../../services');
 
 const register = async (req, res) => {
   const { name, email, password, location, phone } = req.body;
