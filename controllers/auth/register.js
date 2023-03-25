@@ -1,9 +1,7 @@
 const { InternalServerError, Conflict } = require('http-errors');
+
+const { createToken } = require('services/utils/createToken');
 const { userServices } = require('../../services');
-
-const jwt = require('jsonwebtoken');
-
-const { SECRET_KEY, NODE_ENV } = process.env;
 
 const register = async (req, res) => {
   const { name, email, password, location, phone } = req.body;
@@ -22,12 +20,7 @@ const register = async (req, res) => {
   newUser.setPassword(password);
   newUser.setAvatar(null, '');
 
-  const payload = {
-    id: newUser._id,
-  };
-
-  const tokenLifetime = NODE_ENV === 'development' ? '1w' : '1h';
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: tokenLifetime });
+  const token = createToken({ id: newUser._id });
   newUser.setToken(token);
 
   const savedUser = await newUser.save();
