@@ -1,4 +1,4 @@
-const { InternalServerError } = require('http-errors');
+const { InternalServerError, Unauthorized } = require('http-errors');
 
 const { User } = require('../models');
 
@@ -12,6 +12,16 @@ const findUser = (searchQueryObj, returnFullData = false) => {
   return returnFullData
     ? foundUser
     : foundUser?.select('-token -password -favoriteNotices -notices');
+};
+
+const findUserById = async id => {
+  const user = await User.findById(id);
+
+  if (!user) {
+    throw new Unauthorized('Not authorized');
+  }
+
+  return user;
 };
 
 const updateUserById = (id, data) => {
@@ -51,6 +61,7 @@ const deletePetForUserWithId = async (userId, petId) => {
 module.exports = {
   createUser,
   findUser,
+  findUserById,
   updateUserById,
   addPetForUserWithId,
   deletePetForUserWithId,
