@@ -3,13 +3,10 @@ const logger = require('morgan');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs/promises');
-<<<<<<< HEAD
 const fsSync = require('fs');
 
-=======
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
->>>>>>> c2ab500 (не дороблений)
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
