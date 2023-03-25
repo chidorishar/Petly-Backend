@@ -3,6 +3,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs/promises');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 const fsSync = require('fs');
 
 require('dotenv').config();
@@ -27,6 +29,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/notices', noticeRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/services', servicesRouter);
+app.use('/api-swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((err, req, res, next) => {
   // delete image if it was uploaded to server but there was an error
