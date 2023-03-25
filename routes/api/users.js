@@ -9,7 +9,11 @@ const {
 const { petJoiSchema } = require('../../models');
 const { addPet, deletePetById } = require('../../controllers/pets');
 const { upload } = require('../../services');
-const { getUserInformation, updateUser } = require('../../controllers/users');
+const {
+  getUserInformation,
+  updateUser,
+  updateAvatar,
+} = require('../../controllers/users');
 const { userJoiEditSchema } = require('../../models');
 
 router.get('/', userValidation, ctrlWrapper(getUserInformation));
@@ -27,6 +31,14 @@ router.patch(
   userValidation,
   validateBody(userJoiEditSchema),
   ctrlWrapper(updateUser)
+);
+
+router.patch(
+  '/avatar',
+  userValidation,
+  upload.single('avatarImg'),
+  uploadImageToCloudinary,
+  ctrlWrapper(updateAvatar)
 );
 
 router.delete('/pets/:id', userValidation, ctrlWrapper(deletePetById));

@@ -15,7 +15,7 @@ const deletePetById = async (req, res) => {
 
   const { cloudinaryImagePublicId } = deletedPet;
   if (cloudinaryImagePublicId)
-    cloudinaryServices.deleteImageFromCloudinary(cloudinaryImagePublicId);
+    await cloudinaryServices.deleteImageFromCloudinary(cloudinaryImagePublicId);
 
   res.json({
     message: `pet with ${ownerID} deleted`,

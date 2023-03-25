@@ -48,9 +48,10 @@ const userSchema = Schema(
 
   {
     methods: {
-      setAvatar(path = null) {
-        const pathToImg = path ?? gravatar.url(this.email, { s: '250' });
+      setAvatar(path = null, cloudinaryImagePublicId = '') {
+        const pathToImg = path ?? gravatar.url(this.email, { s: '250' }, true);
         this.avatarURL = pathToImg;
+        this.cloudinaryImagePublicId = cloudinaryImagePublicId;
       },
       // Хеш пароля при регістрації
       setPassword: function (password) {
@@ -126,7 +127,7 @@ const userJoiLoginSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
-    .min(10)
+    .min(3)
     .max(63)
     .required('Email must be in format mail@mail.com'),
   password: Joi.string()

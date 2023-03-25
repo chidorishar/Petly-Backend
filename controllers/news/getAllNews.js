@@ -1,12 +1,9 @@
-const { News } = require('../../models/news');
+const { newsServices } = require('../../services');
 
 const getAllNews = async (req, res) => {
   const { page = 1, limit = 9 } = req.query;
   const skip = (page - 1) * limit;
-  const news = await News.find({}, '', {
-    skip,
-    limit,
-  }).sort({ date: -1 });
+  const news = await newsServices.getAllNews({ skip, limit });
 
   res.json({
     message: 'success',
@@ -14,4 +11,4 @@ const getAllNews = async (req, res) => {
   });
 };
 
-module.exports = getAllNews;
+module.exports = { getAllNews };

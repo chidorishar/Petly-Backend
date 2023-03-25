@@ -5,6 +5,8 @@ const path = require('path');
 const fs = require('fs/promises');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const fsSync = require('fs');
+
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
@@ -30,7 +32,12 @@ app.use('/api/services', servicesRouter);
 app.use('/api-swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((err, req, res, next) => {
-  if (req.file) fs.unlink(req.file.path);
+  // delete image if it was uploaded to server but there was an error
+  const leftoverImgPath = req?.file?.path;
+  if (leftoverImgPath && fsSync.existsSync(leftoverImgPath))
+    fs.unlink(leftoverImgPath);
+
+  // report error
   const { status = 500, message = 'Server error' } = err;
   res.status(status).json({ message });
 });

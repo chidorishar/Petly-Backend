@@ -6,11 +6,10 @@ const addNoticeToFavorites = async (userId,noticeId) => {
      if(!notice) {
         throw new BadRequest(`Not found such id ${noticeId}`);
      }// добавляем в favorite, если есть id заметки есть в базе
-    const result = await User.updateOne(
+    await User.updateOne(
         { _id: userId },
         { "$addToSet": { favoriteNotices: noticeId } }
-      )     
-    return result;
+      )         
 }
 
 module.exports = addNoticeToFavorites;

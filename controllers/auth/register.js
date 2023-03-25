@@ -16,7 +16,7 @@ const register = async (req, res) => {
     phone,
   });
   newUser.setPassword(password);
-  newUser.setAvatar();
+  newUser.setAvatar(null, '');
   const savedUser = await newUser.save();
   if (!savedUser) throw new InternalServerError('Failed to save new user');
 
