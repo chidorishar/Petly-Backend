@@ -178,7 +178,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UserPets"
+									"$ref": "#/components/schemas/UserPetsSchema"
 								}
 							}
 						}
@@ -311,64 +311,67 @@
 					}
 				}
 			},
-			"example": {
-				"status": "success",
-				"code": 200,
-				"data": {
-					"token": "string",
+			"UserPetsSchema": {
+				"type": "object",
+				"properties": {
 					"user": {
-						"email": "aladin1@gmail.com"
+						"type": "object",
+						"$ref": "#/components/schemas/User"
 					}
 				}
-			}
-		},
-		"UserPets": {
-			"type": "object",
-			"properties": {
-				"user": {
-					"type": "object",
-					"$ref": "#/components/schemas/User"
-				}
-			}
-		},
-		"User": {
-			"type": "object",
-			"properties": {
-				"_id": {
-					"type": "string",
-					"example": "63c6f80fab4874e768f0dd83"
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"description": "63c6f80fab4874e768f0dd83"
+					},
+					"email": {
+						"type": "string",
+						"description": "aladin1@gmail.com"
+					},
+					"name": {
+						"type": "string",
+						"description": "User"
+					},
+					"location": {
+						"type": "string",
+						"description": "City, Region"
+					},
+					"phone": {
+						"type": "string",
+						"format": "date-time",
+						"description": "+380000000000"
+					},
+					"birthday": {
+						"type": "string",
+						"description": "01.01.1900"
+					},
+					"avatarURL": {
+						"type": "string",
+						"format": "uri",
+						"description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg"
+					},
+					"favoriteNotices": {
+						"type": "array",
+						"description": []
+					},
+					"pets": {
+						"type": "array",
+						"description": []
+					}
 				},
-				"name": {
-					"type": "string",
-					"example": "User"
-				},
-				"email": {
-					"type": "string",
-					"example": "aladin1@gmail.com"
-				},
-				"avatarURL": {
-					"type": "string",
-					"example": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg"
-				},
-				"phone": {
-					"type": "string",
-					"example": "+380000000000"
-				},
-				"location": {
-					"type": "string",
-					"example": "City, Region"
-				},
-				"birthday": {
-					"type": "string",
-					"example": "01.01.1900"
-				},
-				"favoriteNotices": {
-					"type": "array",
-					"example": []
-				},
-				"pets": {
-					"type": "array",
-					"example": []
+				"example": {
+					"_id": "63c6f80fab4874e768f0dd83",
+					"email": "aladin1@gmail.com",
+					"name": "User",
+					"location": "City, Region",
+					"phone": "+380000000000",
+					"birthday": "01.01.1900",
+					"avatarURL": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg",
+					"favoriteNotices": [],
+					"pets": []
 				}
 			}
 		}
