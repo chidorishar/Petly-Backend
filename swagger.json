@@ -52,7 +52,7 @@
 		}
 	],
 	"paths": {
-		"/auth/register": {
+		"/api/auth/register": {
 			"post": {
 				"tags": [
 					"Auth"
@@ -96,6 +96,101 @@
 					}
 				}
 			}
+		},
+		"/api/auth/login": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "User login",
+				"parameters": [],
+				"security": [
+					{
+						"Bearer": []
+					}
+				],
+				"requestBody": {
+					"description": "Login object",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "User is logged in.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Email or password is wrong"
+					}
+				}
+			}
+		},
+		"/api/auth/logout": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Logs out current logged in user",
+				"parameters": [],
+				"security": [
+					{
+						"Bearer": []
+					}
+				],
+				"operationId": "logoutUser",
+				"responses": {
+					"204": {
+						"description": "User logout"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Server error."
+					}
+				}
+			}
+		},
+		"/api/users": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Information about current user",
+				"description": "",
+				"operationId": "getUser",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserPets"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Server error."
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -109,51 +204,180 @@
 				"properties": {
 					"email": {
 						"type": "string",
-						"description": "User's email",
-						"format": "email"
+						"example": "aladin1@gmail.com"
 					},
 					"password": {
 						"type": "string",
-						"description": "User's password",
-						"example": "qwerty123"
+						"example": "Aladin1989"
+					},
+					"name": {
+						"type": "string",
+						"example": "User"
+					},
+					"location": {
+						"type": "string",
+						"example": "City, Region"
+					},
+					"phone": {
+						"type": "string",
+						"example": "+380000000000"
 					}
 				}
 			},
 			"RegistrationResponse": {
-				"type": "array",
-				"items": {
-					"type": "object",
-					"properties": {
-						"email": {
-							"type": "string",
-							"description": "User's email",
-							"format": "email"
-						},
-						"userId": {
-							"type": "number",
-							"description": "User's id",
-							"example": "32143232436545474"
+				"type": "object",
+				"properties": {
+					"status": {
+						"type": "string",
+						"description": "status: success"
+					},
+					"code": {
+						"type": "string",
+						"description": "201"
+					},
+					"data": {
+						"type": "object",
+						"properties": {
+							"user": {
+								"type": "object",
+								"properties": {
+									"email": {
+										"type": "string",
+										"description": "aladin12@gmail.com"
+									}
+								}
+							}
 						}
 					}
 				},
-				"example": [
-					{
-						"email": "1@gmail.com",
-						"userId": "1"
-					},
-					{
-						"email": "2@gmail.com",
-						"userId": "2"
+				"example": {
+					"status": "success",
+					"code": "201",
+					"data": {
+						"user": {
+							"email": "aladin12@gmail.com"
+						}
 					}
-				]
+				}
+			},
+			"LoginRequest": {
+				"type": "object",
+				"required": [
+					"email",
+					"password"
+				],
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "User's email"
+					},
+					"password": {
+						"type": "string",
+						"description": "User's password"
+					}
+				},
+				"example": {
+					"email": "aladin1@gmail.com",
+					"password": "Aladin1989"
+				}
+			},
+			"LoginResponse": {
+				"type": "object",
+				"properties": {
+					"status": {
+						"type": "string",
+						"description": "success"
+					},
+					"code": {
+						"type": "string",
+						"description": "200"
+					},
+					"data": {
+						"type": "object",
+						"properties": {
+							"accessToken": {
+								"type": "string"
+							},
+							"user": {
+								"type": "object",
+								"properties": {
+									"email": {
+										"type": "string",
+										"description": "aladin1@gmail.com"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"example": {
+				"status": "success",
+				"code": 200,
+				"data": {
+					"token": "string",
+					"user": {
+						"email": "aladin1@gmail.com"
+					}
+				}
 			}
 		},
-		"securitySchemes": {
-			"Bearer": {
-				"type": "http",
-				"scheme": "bearer",
-				"bearerFormat": "JWT"
+		"UserPets": {
+			"type": "object",
+			"properties": {
+				"user": {
+					"type": "object",
+					"$ref": "#/components/schemas/User"
+				}
 			}
+		},
+		"User": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"type": "string",
+					"example": "63c6f80fab4874e768f0dd83"
+				},
+				"name": {
+					"type": "string",
+					"example": "User"
+				},
+				"email": {
+					"type": "string",
+					"example": "aladin1@gmail.com"
+				},
+				"avatarURL": {
+					"type": "string",
+					"example": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673618335/w3t87ucpbxquzk24kmwx.jpg"
+				},
+				"phone": {
+					"type": "string",
+					"example": "+380000000000"
+				},
+				"location": {
+					"type": "string",
+					"example": "City, Region"
+				},
+				"birthday": {
+					"type": "string",
+					"example": "01.01.1900"
+				},
+				"favoriteNotices": {
+					"type": "array",
+					"example": []
+				},
+				"pets": {
+					"type": "array",
+					"example": []
+				}
+			}
+		}
+	},
+	"securitySchemes": {
+		"Bearer": {
+			"type": "http",
+			"scheme": "bearer",
+			"bearerFormat": "JWT"
 		}
 	}
 }
