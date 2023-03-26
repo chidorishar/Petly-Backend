@@ -7,8 +7,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const fsSync = require('fs');
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
