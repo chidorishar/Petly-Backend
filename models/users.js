@@ -62,10 +62,6 @@ const userSchema = Schema(
       comparePassword: function (password) {
         return bcrypt.compareSync(password, this.password);
       },
-
-      setToken: function (token) {
-        this.token = token;
-      },
     },
     versionKey: false,
   }
