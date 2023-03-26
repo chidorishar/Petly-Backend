@@ -5,7 +5,7 @@ const getCurrentUser = async (req, res) => {
 
   const user = await userServices.findUserById(id);
 
-  const { name, location, phone, email, avatarUrl, token } = user;
+  const { name, location, phone, email, avatarUrl } = user;
 
   res.status(200).json({
     status: 'success',
@@ -17,7 +17,6 @@ const getCurrentUser = async (req, res) => {
         phone,
         email,
         avatarUrl,
-        token,
       },
     },
   });

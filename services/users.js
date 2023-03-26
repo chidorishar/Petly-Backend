@@ -24,10 +24,16 @@ const findUserById = async id => {
   return user;
 };
 
-const updateUserById = (id, data) => {
-  return User.findByIdAndUpdate(id, { $set: data }, { new: true }).select(
-    '-token -password -favoriteNotices -pets -notices'
-  );
+const updateUserById = async (id, data) => {
+  const user = await User.findByIdAndUpdate(
+    id,
+    { $set: data },
+    { new: true }
+  ).select('-token -password -favoriteNotices -pets -notices');
+
+  if (!user) throw new InternalServerError('Failed to save new user');
+
+  return user;
 };
 
 const addPetForUserWithId = async (userId, petId) => {

@@ -24,4 +24,6 @@ router.post('/logout', userValidation, ctrlWrapper(ctrl.logout));
 
 router.get('/current', userValidation, ctrlWrapper(ctrl.getCurrentUser));
 
+router.post('/refresh', ctrlWrapper(ctrl.refreshAccessToken));
+
 module.exports = router;

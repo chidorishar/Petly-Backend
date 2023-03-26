@@ -4,5 +4,6 @@ const parsePagination = require('./parsePagination');
 module.exports = {
   ...parsePagination,
   ...parseUserToken,
-  ...require('./createToken'),
+  ...require('./createAccessToken'),
+  ...require('./createRefreshToken'),
 };
