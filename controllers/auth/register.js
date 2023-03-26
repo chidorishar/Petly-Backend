@@ -1,5 +1,6 @@
 const { InternalServerError, Conflict } = require('http-errors');
-const { userServices } = require('../../services');
+
+const { userServices, utils } = require('../../services');
 
 const register = async (req, res) => {
   const { name, email, password, location, phone } = req.body;
@@ -17,6 +18,11 @@ const register = async (req, res) => {
   });
   newUser.setPassword(password);
   newUser.setAvatar(null, '');
+
+  const accessToken = utils.createAccessToken({ id: newUser._id });
+  const refreshToken = utils.createRefreshToken({ id: newUser._id });
+  newUser.setToken(accessToken);
+
   const savedUser = await newUser.save();
   if (!savedUser) throw new InternalServerError('Failed to save new user');
 
@@ -30,6 +36,8 @@ const register = async (req, res) => {
         phone,
         email,
         avatarUrl: savedUser.avatarUrl,
+        accessToken,
+        refreshToken,
       },
     },
   });
