@@ -33,7 +33,7 @@ const userSchema = Schema(
       type: Date,
       default: new Date(),
     },
-    token: {
+    accessToken: {
       type: String,
       default: null,
     },
@@ -64,7 +64,7 @@ const userSchema = Schema(
       },
 
       setToken: function (token) {
-        this.token = token;
+        this.accessToken = token;
       },
     },
     versionKey: false,
