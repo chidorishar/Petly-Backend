@@ -3,6 +3,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs/promises');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 const fsSync = require('fs');
 
 const swaggerUi = require('swagger-ui-express');

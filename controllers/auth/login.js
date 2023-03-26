@@ -25,13 +25,9 @@ const login = async (req, res) => {
         location,
         phone,
         email,
-<<<<<<< HEAD
         avatarUrl,
         accessToken,
         refreshToken,
-=======
-        name: usr.name,
->>>>>>> 4197b81 (Added user name to login's response)
       },
     },
   });
