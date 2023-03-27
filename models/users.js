@@ -111,6 +111,7 @@ const userJoiRegisterSchema = Joi.object({
 });
 
 const userJoiEditSchema = Joi.object({
+  birthday: Joi.date().less('now'),
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
