@@ -9,8 +9,13 @@
       "url": ""
     }
   },
-  "consumes": ["application/json", "multipart/form-data"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "servers": [
     {
       "url": "http://localhost:4000"
@@ -38,18 +43,24 @@
       "description": "notices for auth user"
     },
     {
-      "name": "Favorites",
-      "description": "Authorization endpoints"
+      "name": "Notices for auth user",
+      "description": "notices for auth user"
     },
     {
-      "name": "Sevices",
+      "name": "Notices for auth user Favorites",
+      "description": "notices for auth user"
+    },
+    {
+      "name": "Services",
       "description": "notices for auth user"
     }
   ],
   "paths": {
     "/api/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User registration",
         "parameters": [],
         "security": [
@@ -92,7 +103,9 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User login",
         "parameters": [],
         "security": [
@@ -130,7 +143,9 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logs out current logged in user",
         "parameters": [],
         "security": [
@@ -154,11 +169,18 @@
     },
     "/api/users": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Information about current user",
         "description": "",
         "operationId": "getUser",
         "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -181,11 +203,18 @@
     },
     "/api/users/pets": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Information about current user",
         "description": "",
         "operationId": "getUser",
         "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -208,11 +237,18 @@
     },
     "/api/users/": {
       "patch": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Information about current user",
         "description": "",
         "operationId": "getUser",
         "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -235,11 +271,18 @@
     },
     "/api/users/avatar": {
       "patch": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update user`s avatar",
         "description": "",
         "operationId": "updateUsersAvatar",
         "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "",
           "required": true,
@@ -268,17 +311,14 @@
           "400": {
             "description": "Bad request"
           }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
+        }
       }
     },
     "/api/users/pets{id}": {
       "delete": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Deletes a pet by ID",
         "parameters": [
           {
@@ -290,6 +330,11 @@
               "type": "string",
               "format": "uuid"
             }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
           }
         ],
         "responses": {
@@ -319,7 +364,9 @@
     },
     "/api/news": {
       "get": {
-        "tags": ["News"],
+        "tags": [
+          "News"
+        ],
         "summary": "Get all news",
         "description": "",
         "operationId": "getNews",
@@ -340,7 +387,9 @@
     },
     "/api/news/": {
       "get": {
-        "tags": ["News"],
+        "tags": [
+          "News"
+        ],
         "summary": "Get news articles by search query and page number",
         "parameters": [
           {
@@ -388,7 +437,9 @@
     },
     "/api/notices/category/{categoryName}": {
       "get": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Get notices by category",
         "description": "Categories names: sell, for-free, lost-found",
         "operationId": "get Notice",
@@ -428,13 +479,316 @@
           }
         }
       }
+    },
+    "/api/notices/notice/{noticeID}": {
+      "get": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get notice by id",
+        "description": "",
+        "operationId": "get Notice",
+        "parameters": [
+          {
+            "name": "noticeID",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeId"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Invalid id"
+          }
+        }
+      }
+    },
+    "/api/notices/new": {
+      "post": {
+        "tags": [
+          "Notices for auth user"
+        ],
+        "summary": "Add new notice",
+        "description": "",
+        "operationId": "addPet",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/NewNotice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeResponses"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/notices/own": {
+      "get": {
+        "tags": [
+          "Notices for auth user"
+        ],
+        "summary": "notice for auth user",
+        "description": "",
+        "operationId": "addPet",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticesOwn"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/notices/own/{noticeID}": {
+      "delete": {
+        "tags": [
+          "Notices for auth user"
+        ],
+        "summary": "notice for auth user",
+        "description": "",
+        "operationId": "addPet",
+        "parameters": [
+          {
+            "name": "noticeID",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticesDeleteId"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/notices/favorite": {
+      "get": {
+        "tags": [
+          "Notices for auth user Favorites"
+        ],
+        "summary": "Get favorite notices",
+        "description": "",
+        "operationId": "get Notice",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticesFavorites"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/notices/favorites/{noticeId}": {
+      "patch": {
+        "tags": [
+          "Notices for auth user Favorites"
+        ],
+        "summary": "Update favorite status",
+        "description": "",
+        "operationId": "updateFavoriteStatus",
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoriteNotices"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/notices/favorites/{noticeId}/": {
+      "delete": {
+        "tags": [
+          "Notices for auth user Favorites"
+        ],
+        "summary": "Update favorite status",
+        "description": "",
+        "operationId": "updateFavoriteStatus",
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeDeleteForFavorites"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/services": {
+      "get": {
+        "tags": [
+          "Services"
+        ],
+        "summary": "Get all sponsors",
+        "description": "",
+        "operationId": "getSponsors",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SponsorsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -496,7 +850,10 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -938,6 +1295,650 @@
           "__v": 0,
           "isOwner": false,
           "isFavorite": false
+        }
+      },
+      "NoticeId": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The unique identifier for the dog"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the dog post"
+          },
+          "breed": {
+            "type": "string",
+            "description": "The breed of the dog"
+          },
+          "location": {
+            "type": "string",
+            "description": "The location of the dog"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "The date of birth of the dog in format dd.mm.yyyy"
+          },
+          "category": {
+            "type": "string",
+            "description": "The category of the dog post (e.g. sell, adopt)"
+          },
+          "petName": {
+            "type": "string",
+            "description": "The name of the dog"
+          },
+          "sex": {
+            "type": "string",
+            "description": "The sex of the dog (e.g. male, female)"
+          },
+          "price": {
+            "type": "integer",
+            "description": "The price of the dog"
+          },
+          "image": {
+            "type": "string",
+            "description": "The URL of the image of the dog"
+          },
+          "cloudinaryImagePublicId": {
+            "type": "string",
+            "description": "The public ID of the image in Cloudinary"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Additional comments about the dog"
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "The unique identifier for the owner of the dog"
+              },
+              "email": {
+                "type": "string",
+                "description": "The email address of the owner"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the owner"
+              },
+              "phone": {
+                "type": "string",
+                "description": "The phone number of the owner"
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The timestamp when the dog post was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The timestamp when the dog post was last updated"
+          },
+          "__v": {
+            "type": "integer",
+            "description": "The version of the dog post in the database"
+          }
+        },
+        "example": {
+          "_id": "64207fd29a4e8838234b8d4a",
+          "title": "Sell",
+          "breed": "sdasdasd",
+          "location": "Aaa, aaaa",
+          "birthDate": "2022-02-01T22:00:00.000Z",
+          "category": "sell",
+          "name": "Veto",
+          "sex": "male",
+          "price": 5,
+          "image": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679851473/du43jge5kdgw5ulofdhu.png",
+          "cloudinaryImagePublicId": "du43jge5kdgw5ulofdhu",
+          "comments": "6666666666666",
+          "owner": {
+            "_id": "641f019d29f3a25e0f1f8204",
+            "email": "OlehTestAcc@asasas.com",
+            "name": "New user",
+            "phone": "+380000000000"
+          },
+          "createdAt": "2023-03-26T17:24:34.237Z",
+          "updatedAt": "2023-03-26T17:24:34.237Z",
+          "__v": 0
+        }
+      },
+      "NewNotice": {
+        "type": "object",
+        "required": [
+          "title",
+          "petName",
+          "location",
+          "dateOfBirth",
+          "image",
+          "category"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Cute dog looking for good hands"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary"
+          },
+          "petName": {
+            "type": "string",
+            "example": "Gav"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "12.12.2019"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "sell",
+              "lost-found",
+              "for-free"
+            ],
+            "example": "sell"
+          },
+          "location": {
+            "type": "string",
+            "example": "Kyiv"
+          },
+          "comments": {
+            "type": "string",
+            "example": "Cute boy"
+          },
+          "breed": {
+            "type": "string",
+            "example": "outbreed"
+          },
+          "sex": {
+            "type": "string",
+            "example": "male"
+          },
+          "price": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "NoticeResponses": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Cute dog looking for good hands"
+          },
+          "image": {
+            "type": "string",
+            "description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673696237/petly_dir…"
+          },
+          "petName": {
+            "type": "string",
+            "description": "Gav"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "12.12.2019"
+          },
+          "category": {
+            "type": "string",
+            "description": "sell"
+          },
+          "location": {
+            "type": "string",
+            "description": "Kyiv"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Cute boy"
+          },
+          "breed": {
+            "type": "string",
+            "description": "outbreed"
+          },
+          "sex": {
+            "type": "string",
+            "description": "male"
+          },
+          "price": {
+            "type": "integer",
+            "description": 0
+          },
+          "owner": {
+            "type": "string",
+            "description": "63c28b67389c8028613aca52"
+          },
+          "_id": {
+            "type": "string",
+            "description": "63c293ef9c2c38b4a60b3d3b"
+          }
+        },
+        "example": {
+          "_id": "6422ac759f9719715ec4186a",
+          "title": "Sell",
+          "breed": "sdasdasd",
+          "location": "Aaa, aaaa",
+          "birthDate": "2022-02-01T22:00:00.000Z",
+          "category": "sell",
+          "name": "Veto",
+          "sex": "male",
+          "price": 5,
+          "image": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679851473/du43jge5kdgw5ulofdhu.png",
+          "cloudinaryImagePublicId": "du43jge5kdgw5ulofdhu",
+          "comments": "6666666666666",
+          "owner": "64199cae9bf44e2cfbb49abb",
+          "createdAt": "2023-03-28T08:59:33.873Z",
+          "updatedAt": "2023-03-28T08:59:33.873Z",
+          "__v": 0
+        }
+      },
+      "NoticesOwn": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The unique ID of the item"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the item"
+          },
+          "breed": {
+            "type": "string",
+            "description": "The breed of the animal"
+          },
+          "location": {
+            "type": "string",
+            "description": "The location of the item"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "The birthdate of the animal"
+          },
+          "category": {
+            "type": "string",
+            "description": "The category of the item"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the animal"
+          },
+          "sex": {
+            "type": "string",
+            "description": "The sex of the animal"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price of the item"
+          },
+          "image": {
+            "type": "string",
+            "description": "The URL of the item's image"
+          },
+          "cloudinaryImagePublicId": {
+            "type": "string",
+            "description": "The public ID of the item's image in Cloudinary"
+          },
+          "comments": {
+            "type": "string",
+            "description": "The comments about the item"
+          },
+          "owner": {
+            "type": "string",
+            "description": "The ID of the item's owner"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date when the item was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The date when the item was last updated"
+          },
+          "__v": {
+            "type": "number",
+            "description": "The version number of the item"
+          },
+          "isOwner": {
+            "type": "boolean",
+            "description": "A flag indicating whether the requester is the owner of the item"
+          },
+          "isFavorite": {
+            "type": "boolean",
+            "description": "A flag indicating whether the item is marked as a favorite by the requester"
+          }
+        },
+        "example": {
+          "_id": "6422ac759f9719715ec4186a",
+          "title": "Sell",
+          "breed": "sdasdasd",
+          "location": "Aaa, aaaa",
+          "birthDate": "2022-02-01T22:00:00.000Z",
+          "category": "sell",
+          "name": "Veto",
+          "sex": "male",
+          "price": 5,
+          "image": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679993978/aep8wvugzlmi22yxqvjy.png",
+          "cloudinaryImagePublicId": "aep8wvugzlmi22yxqvjy",
+          "comments": "6666666666666",
+          "owner": "64199cae9bf44e2cfbb49abb",
+          "createdAt": "2023-03-28T08:59:33.873Z",
+          "updatedAt": "2023-03-28T08:59:33.873Z",
+          "__v": 0,
+          "isOwner": true,
+          "isFavorite": false
+        }
+      },
+      "NoticesDeleteId": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "63c293ef9c2c38b4a60b3d3b"
+          },
+          "title": {
+            "type": "string",
+            "description": "Cute dog looking for good hands"
+          },
+          "breed": {
+            "type": "string",
+            "description": "outbreed"
+          },
+          "location": {
+            "type": "string",
+            "description": "Kyiv"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "12.12.2019"
+          },
+          "category": {
+            "type": "string",
+            "description": "sell"
+          },
+          "petName": {
+            "type": "string",
+            "description": "Gav"
+          },
+          "sex": {
+            "type": "string",
+            "description": "male"
+          },
+          "price": {
+            "type": "integer",
+            "description": 0
+          },
+          "image": {
+            "type": "string",
+            "description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673696237/petly_dir…"
+          },
+          "cloudinaryImagePublicId": {
+            "type": "string",
+            "description": "aep8wvugzlmi22yxqvjy"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Cute boy"
+          },
+          "owner": {
+            "type": "string",
+            "description": "63c28b67389c8028613aca52"
+          }
+        },
+        "example": {
+          "_id": "6422ac759f9719715ec4186a",
+          "title": "Sell",
+          "breed": "sdasdasd",
+          "location": "Aaa, aaaa",
+          "birthDate": "2022-02-01T22:00:00.000Z",
+          "category": "sell",
+          "name": "Veto",
+          "sex": "male",
+          "price": 5,
+          "image": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679993978/aep8wvugzlmi22yxqvjy.png",
+          "cloudinaryImagePublicId": "aep8wvugzlmi22yxqvjy",
+          "comments": "6666666666666",
+          "owner": "64199cae9bf44e2cfbb49abb",
+          "createdAt": "2023-03-28T08:59:33.873Z",
+          "updatedAt": "2023-03-28T08:59:33.873Z",
+          "__v": 0
+        }
+      },
+      "NoticesFavorites": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "63c293ef9c2c38b4a60b3d3b"
+          },
+          "title": {
+            "type": "string",
+            "description": "Cute dog looking for good hands"
+          },
+          "breed": {
+            "type": "string",
+            "description": "outbreed"
+          },
+          "location": {
+            "type": "string",
+            "description": "Kyiv"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "12.12.2019"
+          },
+          "category": {
+            "type": "string",
+            "description": "sell"
+          },
+          "petName": {
+            "type": "string",
+            "description": "Gav"
+          },
+          "sex": {
+            "type": "string",
+            "description": "male"
+          },
+          "price": {
+            "type": "integer",
+            "description": 0
+          },
+          "image": {
+            "type": "string",
+            "description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673696237/petly_dir…"
+          },
+          "cloudinaryImagePublicId": {
+            "type": "string",
+            "description": "zgqsd7kppwagrfebzxjo"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Cute boy"
+          },
+          "owner": {
+            "type": "string",
+            "description": "63c28b67389c8028613aca52"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date and time when the advertisement was created",
+            "example": "2023-03-28T10:18:43.819Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Date and time when the advertisement was last updated",
+            "example": "2023-03-28T10:18:43.819Z"
+          },
+          "__v": {
+            "type": "integer",
+            "description": "Version key for optimistic concurrency control",
+            "example": 0
+          },
+          "isOwner": {
+            "type": "boolean",
+            "description": "Indicates if the requester is the owner of the advertisement",
+            "example": true
+          },
+          "isFavorite": {
+            "type": "boolean",
+            "description": "Indicates if the pet is marked as a favorite by the requester",
+            "example": true
+          }
+        },
+        "example": {
+          "_id": "6422bf0330e9c5e2349caee6",
+          "title": "Sell",
+          "breed": "sdasdasd",
+          "location": "Aaa, aaaa",
+          "birthDate": "2022-02-01T22:00:00.000Z",
+          "category": "sell",
+          "name": "Veto",
+          "sex": "male",
+          "price": 5,
+          "image": "http://res.cloudinary.com/dodnvi6oc/image/upload/v1679998728/zgqsd7kppwagrfebzxjo.png",
+          "cloudinaryImagePublicId": "zgqsd7kppwagrfebzxjo",
+          "comments": "6666666666666",
+          "owner": "64199cae9bf44e2cfbb49abb",
+          "createdAt": "2023-03-28T10:18:43.819Z",
+          "updatedAt": "2023-03-28T10:18:43.819Z",
+          "__v": 0,
+          "isOwner": true,
+          "isFavorite": true
+        }
+      },
+      "FavoriteNotices": {
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "favoriteNotices": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "message": "success"
+        }
+      },
+      "NoticeDeleteForFavorites": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Cute dog looking for good hands"
+          },
+          "image": {
+            "type": "string",
+            "description": "http://res.cloudinary.com/dvqddp5la/image/upload/v1673696237/petly_dir…"
+          },
+          "petName": {
+            "type": "string",
+            "description": "Gav"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "12.12.2019"
+          },
+          "category": {
+            "type": "string",
+            "description": "sell"
+          },
+          "location": {
+            "type": "string",
+            "description": "Kyiv"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Cute boy"
+          },
+          "breed": {
+            "type": "string",
+            "description": "outbreed"
+          },
+          "sex": {
+            "type": "string",
+            "description": "male"
+          },
+          "price": {
+            "type": "integer",
+            "description": 0
+          },
+          "cloudinaryImagePublicId": {
+            "type": "string",
+            "description": "zgqsd7kppwagrfebzxjo"
+          },
+          "owner": {
+            "type": "string",
+            "description": "63c28b67389c8028613aca52"
+          },
+          "_id": {
+            "type": "string",
+            "description": "63c293ef9c2c38b4a60b3d3b"
+          }
+        },
+        "example": {
+          "message": "success"
+        }
+      },
+      "SponsorsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "63bf12ea67b57c04689197de"
+            },
+            "title": {
+              "type": "string",
+              "description": "Purina"
+            },
+            "url": {
+              "type": "string",
+              "description": "https://www.purina.ua/"
+            },
+            "imageUrl": {
+              "type": "string",
+              "description": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_290.png"
+            },
+            "phone": {
+              "type": "string",
+              "description": "380800500950"
+            },
+            "email": {
+              "type": "string",
+              "description": "info@ua.nestle.com"
+            },
+            "workDays": {
+              "type": "array"
+            }
+          }
+        },
+        "example": {
+          "services": [
+            {
+              "_id": "6418663b518b82afe838d196",
+              "title": "Whiskas",
+              "url": "https://www.whiskas.ua/",
+              "addressUrl": null,
+              "imageUrl": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_285.png",
+              "address": null,
+              "phone": "+380800500155",
+              "email": null,
+              "workDays": []
+            }
+          ]
         }
       },
       "securitySchemes": {
