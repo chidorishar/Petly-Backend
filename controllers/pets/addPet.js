@@ -9,7 +9,7 @@ const addPet = async (req, res) => {
   const _id = req.user;
 
   const { birthday } = req.body;
-  const isDateCorrect = checkCorrectDate(birthday);
+  const isDateCorrect = checkCorrectDate(birthday, 'pet');
 
   if (!isDateCorrect)
     throw new BadRequest(
