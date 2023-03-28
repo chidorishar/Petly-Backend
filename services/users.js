@@ -1,4 +1,4 @@
-const { InternalServerError } = require('http-errors');
+const { InternalServerError, Unauthorized } = require('http-errors');
 
 const { User } = require('../models');
 
@@ -14,10 +14,26 @@ const findUser = (searchQueryObj, returnFullData = false) => {
     : foundUser?.select('-token -password -favoriteNotices -notices');
 };
 
-const updateUserById = (id, data) => {
-  return User.findByIdAndUpdate(id, { $set: data }, { new: true }).select(
-    '-token -password -favoriteNotices -pets -notices'
-  );
+const findUserById = async id => {
+  const user = await User.findById(id);
+
+  if (!user) {
+    throw new Unauthorized('Not authorized');
+  }
+
+  return user;
+};
+
+const updateUserById = async (id, data) => {
+  const user = await User.findByIdAndUpdate(
+    id,
+    { $set: data },
+    { new: true }
+  ).select('-token -password -favoriteNotices -pets -notices');
+
+  if (!user) throw new InternalServerError('Failed to save new user');
+
+  return user;
 };
 
 const addPetForUserWithId = async (userId, petId) => {
@@ -51,6 +67,7 @@ const deletePetForUserWithId = async (userId, petId) => {
 module.exports = {
   createUser,
   findUser,
+  findUserById,
   updateUserById,
   addPetForUserWithId,
   deletePetForUserWithId,

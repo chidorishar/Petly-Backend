@@ -33,7 +33,7 @@ const userSchema = Schema(
       type: Date,
       default: new Date(),
     },
-    token: {
+    accessToken: {
       type: String,
       default: null,
     },
@@ -61,6 +61,10 @@ const userSchema = Schema(
       // Хеш пароля при логіні
       comparePassword: function (password) {
         return bcrypt.compareSync(password, this.password);
+      },
+
+      setToken: function (token) {
+        this.accessToken = token;
       },
     },
     versionKey: false,
@@ -107,6 +111,7 @@ const userJoiRegisterSchema = Joi.object({
 });
 
 const userJoiEditSchema = Joi.object({
+  birthday: Joi.date().less('now'),
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')

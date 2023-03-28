@@ -18,7 +18,7 @@ async function parseUserToken(req) {
   const { id } = jwt.verify(token, secretKey);
 
   const user = await User.findById(id);
-  if (!user || !user.token) {
+  if (!user || !user.accessToken) {
     throw new Unauthorized('Not authorized');
   }
   req.user = id;
