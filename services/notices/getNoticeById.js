@@ -22,8 +22,6 @@ const getNoticeById = async (noticeID, userID) => {
     userWithId
   );
 
-  console.log(extendedNotices[0]);
-
   return extendedNotices[0];
 };
 
