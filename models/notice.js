@@ -82,7 +82,13 @@ const newNoticeSchema = Joi.object({
   birthDate: Joi.date()
     .min('1-1-1950')
     .max('now')
-    .required('Birthday is required'),
+    .required('Birthday is required')
+    .messages({
+      'date.base': 'Incorrect date format',
+      'date.format': 'Incorrect date format. Expected ISO format',
+      'date.min': 'Birthday must be greater than 1950',
+      'date.max': 'Birthday must be less than current date',
+    }),
   name: Joi.string()
     .pattern(nameRegexp, 'Name must contain only letters')
     .min(2)
