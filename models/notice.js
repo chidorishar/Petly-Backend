@@ -1,11 +1,10 @@
 const { Schema, model } = require('mongoose');
-const Joi = require('joi').extend(require('@joi/date'));
+const Joi = require('joi');
 const { mongooseErrorHandler } = require('../helpers');
 
 const nameRegexp = /^([a-zA-Zа-яА-ЯёЁёЁЇїІіҐґЄє\s]+)$/;
 const locationRegexp =
   /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
-// const birthdayRegexp = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/;
 const validCategory = ['sell', 'for-free', 'lost-found'];
 const validGender = ['male', 'female'];
 
@@ -81,8 +80,7 @@ const newNoticeSchema = Joi.object({
     .empty('')
     .default('City, Region'),
   birthDate: Joi.date()
-    .format('YYYY-MM-DD')
-    .min('1-1-2000')
+    .min('1-1-1950')
     .max('now')
     .required('Birthday is required'),
   name: Joi.string()
