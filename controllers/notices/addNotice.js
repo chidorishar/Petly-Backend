@@ -1,7 +1,6 @@
 const service = require('../../services/notices');
 
 const addNotice = async (req, res) => {
-  // to do  обработка корректности даты
   const pathToImage = req.url;
   const imageCloudinaryID = req.public_id;
   const userId = req.user;
