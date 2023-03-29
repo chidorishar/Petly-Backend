@@ -1,20 +1,7 @@
-const {
-  petServices,
-  userServices,
-  checkCorrectDate,
-} = require('../../services');
-const { BadRequest } = require('http-errors');
+const { petServices, userServices } = require('../../services');
 
 const addPet = async (req, res) => {
   const _id = req.user;
-
-  const { birthday } = req.body;
-  const isDateCorrect = checkCorrectDate(birthday, 'pet');
-
-  if (!isDateCorrect)
-    throw new BadRequest(
-      'The date must be no more than 15 years in the past, or later than today'
-    );
 
   const newPet = await petServices.createPet({
     ...req.body,

@@ -7,7 +7,6 @@ const utils = require('./utils');
 const cloudinaryServices = require('./cloudinary');
 const newsServices = require('./news');
 const noticesServices = require('./notices');
-const checkCorrectDate = require('./checkCorrectDate');
 
 module.exports = {
   connectToMongo,
@@ -19,5 +18,4 @@ module.exports = {
   cloudinaryServices,
   newsServices,
   noticesServices,
-  checkCorrectDate,
 };
