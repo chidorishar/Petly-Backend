@@ -71,14 +71,13 @@ const userSchema = Schema(
   }
 );
 
-const emailRegexp =
-  /^([a-zA-Z0-9_.]+){1}([a-zA-Z0-9_\-.]+){1}@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,})$/;
+const emailRegexp = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 const passwordRegexp =
   /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()-_/#:;<>])[A-Za-z\d@$!%*?&]/;
 const nameRegexp = /^([a-zA-Z]+[-]?[a-zA-Z]+)+[ ]?([a-zA-Z]+)$/;
 const phoneRegexp = /^\+380\d{3}\d{2}\d{2}\d{2}$/;
 const locationRegexp =
-  /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
+  /^([-'a-zA-Zа-яА-ЯІіЇїЄє\u0410-\u044F`]+){2}, ([-'a-zA-Zа-яА-ЯІіЇїЄє\u0410-\u044F`]+){2}$/;
 
 const userJoiRegisterSchema = Joi.object({
   email: Joi.string()
