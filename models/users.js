@@ -72,7 +72,7 @@ const userSchema = Schema(
 );
 
 const emailRegexp =
-  /^([a-zA-Z0-9_.]+){1}([a-zA-Z0-9_\-.]+){1}@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,3})$/;
+  /^([a-zA-Z0-9_.]+){1}([a-zA-Z0-9_\-.]+){1}@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,})$/;
 const passwordRegexp =
   /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()-_/#:;<>])[A-Za-z\d@$!%*?&]/;
 const nameRegexp = /^([a-zA-Zа-яА-ЯІіЇїЄє\s]+)$/;
@@ -84,7 +84,7 @@ const userJoiRegisterSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
-    .min(6)
+    .min(5)
     .max(63)
     .required('Email must be in format mail@mail.com'),
   password: Joi.string()
@@ -115,7 +115,7 @@ const userJoiEditSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
-    .min(6)
+    .min(5)
     .max(63),
   name: Joi.string().pattern(nameRegexp, 'Name must contain only letters'),
   location: Joi.string().pattern(
@@ -132,7 +132,7 @@ const userJoiLoginSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(emailRegexp, 'Email must be in format mail@mail.com')
-    .min(3)
+    .min(5)
     .max(63)
     .required('Email must be in format mail@mail.com'),
   password: Joi.string()
