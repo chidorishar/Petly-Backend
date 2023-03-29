@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Joi = require('joi');
+const Joi = require('joi').extend(require('@joi/date'));
 
 const { mongooseErrorHandler } = require('../helpers');
 
@@ -35,7 +35,7 @@ const petSchema = new Schema(
 );
 
 const nameRegexp = /^([a-zA-Zа-яА-ЯёЁёЁЇїІіҐґЄє\s]+)$/;
-const birthdayRegexp = /^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?$/;
+// const birthdayRegexp = /^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?$/;
 
 const petJoiSchema = Joi.object({
   name: Joi.string()
@@ -43,8 +43,10 @@ const petJoiSchema = Joi.object({
     .min(2)
     .max(16)
     .required('Name is required'),
-  birthday: Joi.string()
-    .pattern(birthdayRegexp, 'Birthday must be in format 2020-12-19')
+  birthday: Joi.date()
+    .format('YYYY-MM-DD')
+    .min('1-1-2000')
+    .max('now')
     .required('Birthday is required'),
   breed: Joi.string()
     .pattern(nameRegexp, 'Breed must contain only letters')

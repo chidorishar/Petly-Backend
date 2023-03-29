@@ -1,12 +1,11 @@
 const { Schema, model } = require('mongoose');
-const Joi = require('joi');
+const Joi = require('joi').extend(require('@joi/date'));
 const { mongooseErrorHandler } = require('../helpers');
 
 const nameRegexp = /^([a-zA-Zа-яА-ЯёЁёЁЇїІіҐґЄє\s]+)$/;
 const locationRegexp =
   /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
-// const birthdayRegexp = /^(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?$/;
-const birthdayRegexp = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/;
+// const birthdayRegexp = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}$/;
 const validCategory = ['sell', 'for-free', 'lost-found'];
 const validGender = ['male', 'female'];
 
@@ -81,8 +80,10 @@ const newNoticeSchema = Joi.object({
     .pattern(locationRegexp, 'Location must be in format City, Region')
     .empty('')
     .default('City, Region'),
-  birthDate: Joi.string()
-    .pattern(birthdayRegexp, 'Birthday must be in format 19.12.2020')
+  birthDate: Joi.date()
+    .format('YYYY-MM-DD')
+    .min('1-1-2000')
+    .max('now')
     .required('Birthday is required'),
   name: Joi.string()
     .pattern(nameRegexp, 'Name must contain only letters')
