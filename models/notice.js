@@ -4,7 +4,7 @@ const { mongooseErrorHandler } = require('../helpers');
 
 const nameRegexp = /^([a-zA-Zа-яА-ЯёЁёЁЇїІіҐґЄє\s]+)$/;
 const locationRegexp =
-  /^([a-zA-Zа-яА-ЯІіЇїЄє]+){2}, ([a-zA-Zа-яА-ЯІіЇїЄє]+){2}$/;
+  /^([a-zA-Zа-яА-ЯІіЇїЄє\u0410-\u044F-'`0-9]+(?:\s[a-zA-Zа-яА-ЯІіЇїЄє\u0410-\u044F-0-9]+)?),\s([a-zA-Zа-яА-ЯІіЇїЄє\u0410-\u044F-'`0-9]+(?:\s[a-zA-Zа-яА-ЯІіЇїЄє\u0410-\u044F0-9]+)*)$/;
 const validCategory = ['sell', 'for-free', 'lost-found'];
 const validGender = ['male', 'female'];
 
